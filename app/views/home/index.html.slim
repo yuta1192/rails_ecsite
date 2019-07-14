@@ -3,7 +3,7 @@ p ロゴ , 商品 , 問い合わせ , ログイン , お気に入り , カート
 = link_to '問い合わせ', connect_home_index_path
 = link_to 'サイトマップ', sitemap_home_index_path
 = link_to '商品一覧', products_path
-/ * = link_to '商品詳細'  * /
+= link_to '商品詳細' , "products/1"
 = link_to 'ログイン', login_path
 = link_to '新規登録', new_user_path
-/ * = link_to 'ユーザー編集', edit_user_path * /
+= link_to 'ユーザー編集', "users/1/edit"
