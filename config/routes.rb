@@ -12,4 +12,6 @@ Rails.application.routes.draw do
       get :cart
     end
   end
+
+  get 'login', to: 'sessions#login'
 end
