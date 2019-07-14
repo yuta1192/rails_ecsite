@@ -7,5 +7,6 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false }
   validates :address, presence: true
   validates :tel, presence: true
+  validates :password, presence: true, length: { minimum: 6 }
   has_secure_password
 end
