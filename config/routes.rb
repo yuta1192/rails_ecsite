@@ -1,3 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :home
+  resources :product
+  resources :user do
+    member do
+      get :favorite
+      get :cart
+    end
+  end
 end
