@@ -4,8 +4,10 @@ p ロゴ , 商品 , 問い合わせ , ログイン , お気に入り , カート
 = link_to 'サイトマップ', sitemap_home_index_path
 = link_to '商品一覧', products_path
 = link_to '商品詳細' , "products/1"
-= link_to 'ログイン', new_session_path
-= link_to 'ログアウト', session_path(current_user), method: :delete
+- if !logged_in?
+  = link_to 'ログイン', new_session_path
+- if logged_in?
+  = link_to 'ログアウト', session_path(current_user), method: :delete
 = link_to '新規登録', new_user_path
 = link_to 'ユーザー詳細', current_user
 /* = link_to 'ユーザー編集', edit_user(current_user) */
