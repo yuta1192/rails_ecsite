@@ -1,3 +1,5 @@
 = @product.name
 = @product.price
 = @product.description
+div
+  = link_to "kounyu", cart_items_path(current_user)

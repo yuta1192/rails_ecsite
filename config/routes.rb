@@ -10,12 +10,8 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :favorite
-      get :cart
+      resources :cart_items
     end
   end
   resources :sessions
-  resources :carts, only: [:show]
-  post '/add_item' => 'carts#add_item'
-  post '/update_item' => 'carts#update_item'
-  delete '/delete_item' => 'carts#delete_item'
 end
