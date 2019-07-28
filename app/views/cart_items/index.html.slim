@@ -1,1 +1,26 @@
 ユーザーのカート商品一覧
+div
+  - @cart_items.each do |cart_item|
+    = cart_item.id
+    div
+       = cart_item.product_id
+    div
+      = cart_item.user_id
+    div
+    = form_for(cart_item, url: "/users/#{cart_item.id}/cart_items/#{current_user.id}", html: {method: :patch}) do |f|
+      = f.hidden_field :product_id, :value => cart_item.product_id
+      = f.hidden_field :user_id, :value => current_user.id
+      = f.label :num, "数量"
+      = f.select :num, options_for_select((1..20).map{|n|[n]}, selected: cart_item.try(:num))
+      = f.submit "変更する", class: "btn btn-primary"
+    div
+      = cart_item.product.name
+    div
+      = cart_item.product.price
+
+  p 小計： #{@total_price}
+
+p そのユーザーがカートに入れた商品のみを表示、購入できるようにする。
+p 商品の個数を変更できるようにする。
+p 購入はAPIなどの機能をしようする。
+p 小計（商品の値段の合計）を追加する。

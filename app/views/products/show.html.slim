@@ -3,3 +3,11 @@
 = @product.description
 div
   = link_to "kounyu", cart_items_path(current_user)
+
+div
+  = form_for(@cart_add, method: :post) do |f|
+    = f.hidden_field :product_id, :value => @product.id
+    = f.hidden_field :user_id, :value => current_user.id
+    = f.label :num, "数量"
+    = f.select :num, [1,2,3,4,5,6,7,8,9,10]
+    = f.submit "カートに入れる", class: "btn btn-primary"
