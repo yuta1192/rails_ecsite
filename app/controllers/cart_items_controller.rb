@@ -3,7 +3,8 @@ class CartItemsController < ApplicationController
   end
 
   def index
-    @cart_items = CartItem.all
+    @user = User.find(params[:id])
+    @cart_items = @user.cart_items.all
     @total_price = 0
     @cart_items.each do |cart_item|
       @total_price += cart_item.product.price
@@ -17,6 +18,11 @@ class CartItemsController < ApplicationController
   def update
     @cart_num = CartItem.find(params[:id])
     @cart_num.update_attributes(cart_params)
+    redirect_to cart_items_path(current_user)
+  end
+
+  def destroy
+    CartItem.find(params[:id]).destroy
     redirect_to cart_items_path(current_user)
   end
 

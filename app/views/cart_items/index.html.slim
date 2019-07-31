@@ -3,16 +3,16 @@ div
   - @cart_items.each do |cart_item|
     = cart_item.id
     div
-       = cart_item.product_id
+      = cart_item.product_id
     div
       = cart_item.user_id
     div
-    = form_for(cart_item, url: "/users/#{cart_item.id}/cart_items/#{current_user.id}", html: {method: :patch}) do |f|
-      = f.hidden_field :product_id, :value => cart_item.product_id
-      = f.hidden_field :user_id, :value => current_user.id
-      = f.label :num, "数量"
-      = f.select :num, options_for_select((1..20).map{|n|[n]}, selected: cart_item.try(:num))
-      = f.submit "変更する", class: "btn btn-primary"
+      = form_for(cart_item, url: cart_item_path(cart_item), method: :patch) do |f|
+        = f.label :num, "数量"
+        = f.select :num, options_for_select((1..20).map{|n|[n]}, selected: cart_item.try(:num))
+        = f.submit "変更する", class: "btn btn-primary"
+    div
+      = link_to "delete", cart_item_path(cart_item), method: :delete
     div
       = cart_item.product.name
     div
@@ -20,6 +20,7 @@ div
 
   p 小計： #{@total_price}
 
+p routesを修正する必要あり（別にユーザー毎のカートにしないため）
 p そのユーザーがカートに入れた商品のみを表示、購入できるようにする。
 p 商品の個数を変更できるようにする。
 p 購入はAPIなどの機能をしようする。
