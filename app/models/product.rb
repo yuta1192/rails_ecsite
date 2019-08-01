@@ -3,4 +3,5 @@ class Product < ApplicationRecord
   validates :price, presence: true
   validates :description, presence: true
   has_many :cart_items
+  has_many :users
 end
