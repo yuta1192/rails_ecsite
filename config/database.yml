@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: rails_ecsite_production
-  username: rails_ecsite
-  password: <%= ENV['RAILS_ECSITE_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
