@@ -1,13 +1,45 @@
-= @product.name
-= @product.price
-= @product.description
-div
-  = link_to "kounyu", cart_items_path(current_user)
+#inner
+  h2 = @product.name
+  = image_tag @product.image.to_s
+  - if current_user.already_favorited?(@product)
+    .icon = button_to product_favorite_path(@product.id, current_user), method: :delete do
+      i.fas.fa-star.iine
+  - else
+    .icon = button_to product_favorites_path(@product.id) do
+      i.far.fa-star.iine
+  div.price #{@product.price}円
 
-div
-  = form_for(@cart_add, method: :post) do |f|
-    = f.hidden_field :product_id, :value => @product.id
-    = f.hidden_field :user_id, :value => current_user.id
-    = f.label :num, "数量"
-    = f.select :num, [1,2,3,4,5,6,7,8,9,10]
-    = f.submit "カートに入れる", class: "btn btn-primary"
+  .div
+  - if @cart_item.present?
+    既にカートにあります
+    .div
+      = link_to "カート", cart_items_path(current_user)
+  - else
+    div
+      = form_for(@cart_add, url: cart_items_path(current_user), method: :post) do |f|
+        = f.hidden_field :product_id, :value => @product.id
+        = f.hidden_field :user_id, :value => current_user.id
+        = f.label :num, "数量"
+        = f.select :num, [1,2,3,4,5,6,7,8,9,10]
+        = f.submit "カートに入れる", class: "btn btn-primary"
+
+  span 商品詳細
+  div
+    = @product.description
+
+  div
+    - @comments.each do |c|
+      = c.id
+      = c.comment
+      = c.good_job
+      = c.evaluation
+
+  span 関連商品
+  div
+    - @relation_products.each do |w|
+      .product_box
+        #inner
+          div
+            = link_to w.name, product_path(w.id)
+          div
+            = image_tag @product.image.to_s

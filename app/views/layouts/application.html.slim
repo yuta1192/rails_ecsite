@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html
+  head
+    title
+      | RailsEcsi //= full_title(yield(:title)
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    = render 'layouts/header'
+    div.container
+    #wrapper
+      = yield
+      = render 'layouts/footer'

@@ -36,6 +36,10 @@ class UsersController < ApplicationController
   end
 
   def favorite
+    @favorites = Favorite.where(user_id: current_user)
+    @favorites_list = @favorites.order(created_at: "desc").page(params[:page]).per(15)
+    @favorite_counts = @favorites.count
+    @counts = @favorite_counts.zero? ? "見つかりませんでした。" : @favorite_counts
   end
 
   def cart

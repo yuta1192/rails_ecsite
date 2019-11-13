@@ -6,11 +6,20 @@ Rails.application.routes.draw do
       get :sitemap
     end
   end
-  resources :products
+  resources :products do
+    resources :favorites, only: [:create, :destroy]
+    collection do
+      get :search
+    end
+  end
   resources :users do
     member do
       get :favorite
-      resources :cart_items
+      resources :cart_items do
+        collection do
+          post 'pay/:id' => 'cart_items#pay', as: 'pay'
+        end
+      end
     end
   end
   resources :sessions

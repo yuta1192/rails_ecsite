@@ -10,7 +10,6 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -37,6 +36,16 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'slim-rails'
 gem 'bcrypt', '3.1.12'
+gem 'faker'
+gem 'kaminari', '~> 0.17.0'
+gem 'byebug'
+gem 'jquery-rails'
+gem 'bootstrap-sass', '3.3.7'
+gem 'carrierwave'
+gem 'font-awesome-sass', '~> 5.4.1'
+gem 'payjp'
+gem 'sqlite3', group: [:development, :test]
+gem 'pg', group: :production
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

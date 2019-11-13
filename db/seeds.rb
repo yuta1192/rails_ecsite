@@ -5,3 +5,43 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+#admin
+User.create!(
+  id:999,
+  email: "yuta1111@gmail.com",
+  name: "yuta",
+  tel: 1111111111,
+  address: "mitaka",
+  password: "password",
+  password_confirmation: "password"
+)
+
+100.times do |n|
+  email = Faker::Internet.email
+  address = "mitaka"
+  password = "password"
+  tel = 1111111111
+  User.create!(
+               name: Faker::Name.first_name,
+               address: address,
+               email: email,
+               tel: tel,
+               password: password,
+               password_confirmation: password
+               )
+end
+
+200.times do |n|
+  price = 1000
+  description = "password"
+  kind = "a"
+  images = open("#{Rails.root}/db/fixtures/maikeru.jpg"),open("#{Rails.root}/db/fixtures/samune15.jpg"),open("#{Rails.root}/db/fixtures/shopping.jpeg")
+  image = images.sample
+  Product.create!(
+               name: Faker::Name.first_name,
+               price: price,
+               description: description,
+               kind: kind,
+               image: image
+               )
+end

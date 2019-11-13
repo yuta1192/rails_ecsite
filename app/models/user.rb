@@ -1,6 +1,12 @@
 class User < ApplicationRecord
   has_many :cart_items
-  belongs_to :product
+  has_many :products, through: :comments
+  has_many :comments
+  has_many :favorites
+  has_many :favorited_products, through: :favorites, source: :product
+  def already_favorited?(product)
+    self.favorites.exists?(product_id: product.id)
+  end
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 20 }

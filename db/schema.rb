@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_28_020346) do
+ActiveRecord::Schema.define(version: 2019_10_14_232419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,25 @@ ActiveRecord::Schema.define(version: 2019_07_28_020346) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "favorites", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
+    t.text "comment"
+    t.string "good_job"
+    t.bigint "user_id"
+    t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "evaluation"
+    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_favorites_on_product_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -34,6 +50,8 @@ ActiveRecord::Schema.define(version: 2019_07_28_020346) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "kind"
+    t.string "image"
   end
 
   create_table "rankings", force: :cascade do |t|
@@ -53,4 +71,8 @@ ActiveRecord::Schema.define(version: 2019_07_28_020346) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "comments", "products"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "products"
+  add_foreign_key "favorites", "users"
 end

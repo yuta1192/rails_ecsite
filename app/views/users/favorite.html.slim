@@ -1,0 +1,26 @@
+p お気に入り数：#{@counts}
+
+.uwagaki
+  - if @favorites.present?
+    - @favorites_list.each do |favorite|
+      .favorite_box
+        table border="1"
+          tr
+            td
+              = link_to favorite.product.name, product_path(favorite.product.id)
+          tr
+            td  #{favorite.product.price}円
+          tr
+            td
+              = image_tag favorite.product.image.to_s
+              - if current_user.already_favorited?(favorite.product)
+                .icon = button_to product_favorite_path(favorite.product.id, current_user), method: :delete do
+                  i.fas.fa-star.iine
+              - else
+                .icon = button_to product_favorites_path(favorite.product.id) do
+                  i.far.fa-star.iine
+          tr
+            td
+              = favorite.product.description
+          tr
+            td  いいねした日：#{favorite.created_at.strftime('%Y/%m/%d')}

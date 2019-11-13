@@ -1,1 +1,11 @@
-p ユーザー詳細画面
+p #{@user.name}さんの情報
+ul
+  li 名前：#{@user.name}
+  li メールアドレス：#{@user.email}
+  li 住所：#{@user.address}
+div
+  = link_to 'カート情報', cart_items_path(current_user)
+div
+  = link_to 'お気に入り', favorite_user_path(current_user)
+div
+  = link_to 'ユーザー情報を変更する', edit_user_path(current_user)

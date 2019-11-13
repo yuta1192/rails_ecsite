@@ -14,6 +14,7 @@ class CartItemsController < ApplicationController
 
   def create
     @cart_add = CartItem.create(cart_params)
+    redirect_to cart_items_path(current_user)
   end
 
   def update
@@ -25,6 +26,15 @@ class CartItemsController < ApplicationController
   def destroy
     CartItem.find(params[:id]).destroy
     redirect_to cart_items_path(current_user)
+  end
+
+  def pay
+      Payjp.api_key = 'sk_test_215ed6c716c8280b40d237d9'
+      charge = Payjp::Charge.create(
+      :amount => @product.price,
+      :card => params['payjp-token'],
+      :currency => 'jpy',
+  )
   end
 
   private
