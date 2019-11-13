@@ -41,12 +41,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id) do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
@@ -71,12 +72,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id) do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
@@ -101,12 +103,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id) do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
@@ -131,12 +134,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id) do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
@@ -161,12 +165,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id) do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
@@ -192,12 +197,13 @@ div
                 td
                   #image
                     = image_tag product.image.to_s
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), remote: true, method: :delete do
-                        i.fas.fa-star.iine
-                    - else
-                      .icon = button_to product_favorites_path(product.id), remote: true do
-                        i.far.fa-star.iine
+                    - if logged_in?
+                      - if current_user.already_favorited?(product)
+                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                          i.fas.fa-star.iine
+                      - else
+                        .icon = button_to product_favorites_path(product.id) do
+                          i.far.fa-star.iine
               tr
                 td 種類：#{product.kind}
               tr
