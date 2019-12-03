@@ -1,0 +1,35 @@
+- if current_user.admin?
+  .mb-3
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th= User.human_attribute_name(:id)
+        th= User.human_attribute_name(:name)
+        th= User.human_attribute_name(:email)
+        th= User.human_attribute_name(:tel)
+        th= User.human_attribute_name(:admin)
+        th
+    tbody
+      - @users.each do |user|
+        - unless user == current_user
+          tr
+            td= user.id
+            td= user.name
+            td= user.email
+            td= user.tel
+            td= user.admin? ? 'true' : 'false'
+            td
+              = link_to '削除', [:admin, user], method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+        - else
+          tr
+            td= user.id
+            td= user.name
+            td= user.email
+            td= user.tel
+            td= user.admin? ? 'true' : 'false'
+            td
+              = link_to "編集", edit_user_path(user), class: 'btn btn-primary mr-3'
+
+- else
+  puts "開発者しか見れないよ"
+  redirect_to root_path

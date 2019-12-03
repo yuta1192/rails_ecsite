@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_232419) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2019_12_02_063848) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -26,8 +23,8 @@ ActiveRecord::Schema.define(version: 2019_10_14_232419) do
   create_table "comments", force: :cascade do |t|
     t.text "comment"
     t.string "good_job"
-    t.bigint "user_id"
-    t.bigint "product_id"
+    t.integer "user_id"
+    t.integer "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "evaluation"
@@ -36,8 +33,8 @@ ActiveRecord::Schema.define(version: 2019_10_14_232419) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "user_id"
+    t.integer "product_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_favorites_on_product_id"
@@ -68,11 +65,8 @@ ActiveRecord::Schema.define(version: 2019_10_14_232419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_digest"
+    t.boolean "admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "comments", "products"
-  add_foreign_key "comments", "users"
-  add_foreign_key "favorites", "products"
-  add_foreign_key "favorites", "users"
 end

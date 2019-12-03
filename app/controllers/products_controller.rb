@@ -20,10 +20,10 @@ class ProductsController < ApplicationController
     @product_search = Product.search(params[:search]).order('name').page(params[:page]).per(15)
     @search_count = Product.search(params[:search]).count
     @counts = @search_count.zero? ? "見つかりませんでした。" : @search_count
-    @price_high = @products.order(price: "desc")
-    @price_low = @products.order(price: "asc")
-    @latest = @products.order(created_at: "desc")
-    @oldest = @products.order(created_at: "asc")
+    @price_high = @products.price_high
+    @price_low = @products.price_low
+    @latest = @products.latest
+    @oldest = @products.oldest
     @favorite_count = Product.find(Favorite.group(:product_id).order('count(product_id) desc').pluck(:product_id))
     @favorite = Favorite.new
   end

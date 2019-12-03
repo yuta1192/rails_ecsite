@@ -13,4 +13,9 @@ class Product < ApplicationRecord
     Product.where(['name LIKE ?', "%#{search}%"])
   end
   mount_uploader :image, ImagesUploader
+
+  scope :price_high, -> { order(price: :desc) }
+  scope :price_low, -> { order(price: :asc) }
+  scope :latest, -> { order(created_at: :desc) }
+  scope :oldest, -> { order(created_at: :asc) }
 end
