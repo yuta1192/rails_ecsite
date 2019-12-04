@@ -1,0 +1,26 @@
+- if current_user.admin?
+  商品一覧
+  - @product_search.each do |product|
+    .product_box
+      table border="1"
+        tr
+          th.h3 = link_to product.name, admin_product_path(product)
+        tr
+          td 値段：#{product.price}円
+        tr
+          td
+            #image
+              = image_tag product.image.to_s
+        tr
+          td 種類：#{product.kind}
+        tr
+          td = product.updated_at.strftime('%Y/%m/%d')
+        tr
+          td お気に入り：#{product.favorited_users.count}
+        tr
+          td
+            = link_to '編集', edit_admin_product_path(product), class: 'btn btn-primary mr-3'
+            = link_to '削除', [:admin, product], method: :delete, data: { confirm: "商品「#{product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+    .div
+  = paginate @product_search

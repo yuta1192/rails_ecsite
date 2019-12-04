@@ -1,0 +1,24 @@
+.nav.justify-content-end
+  = link_to '一覧に戻る', admin_products_path, class: 'nav-link'
+
+#inner
+  h2 = @product.name
+  = image_tag @product.image.to_s
+  div.price #{@product.price}円
+
+  span 商品詳細
+  div
+    = @product.description
+
+  - if @comments.present?
+    div
+      - @comments.each do |c|
+        = c.id
+        = c.comment
+        = c.good_job
+        = c.evaluation
+  - else
+    p まだ評価がありません。
+
+  = link_to '編集', edit_admin_product_path(@product), class: 'btn btn-primary mr-3'
+  = link_to '削除', [:admin, @product], method: :delete, data: { confirm: "商品「#{@product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
