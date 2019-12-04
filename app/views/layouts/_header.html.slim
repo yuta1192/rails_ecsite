@@ -10,15 +10,20 @@ header.navbar.navbar-fixed-top.navbar-inverse
       #logo = link_to "ファッションECサイト", root_path
     nav
       ul id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse"
-        li = link_to "商品一覧", search_products_path
-        - if !logged_in?
-          li = link_to 'ログイン', new_session_path
-          li = link_to '新規登録', new_user_path
-        - if logged_in?
-          li = link_to 'カート', cart_items_path(current_user)
-          li = link_to 'お気に入り', favorite_user_path(current_user)
-          li = link_to 'ユーザー', current_user
+        - if !logged_in? || current_user.admin == false
+          li = link_to "商品一覧", search_products_path
+          - if !logged_in?
+            li = link_to 'ログイン', new_session_path
+            li = link_to '新規登録', new_user_path
+          - if logged_in?
+            li = link_to 'カート', cart_items_path(current_user)
+            li = link_to 'お気に入り', favorite_user_path(current_user)
+            li = link_to 'ユーザー', current_user
+            li = link_to 'ログアウト', session_path(current_user), method: :delete
+          li = form_tag(search_products_path,:method => 'get',class:"inline") do
+            = text_field_tag :search
+            = submit_tag 'Search', :name => nil
+        - else
+          li = link_to 'ユーザー管理画面', admin_users_path
+          li = link_to '商品管理画面', home_admin_products_path
           li = link_to 'ログアウト', session_path(current_user), method: :delete
-        li = form_tag(search_products_path,:method => 'get',class:"inline") do
-          = text_field_tag :search
-          = submit_tag 'Search', :name => nil

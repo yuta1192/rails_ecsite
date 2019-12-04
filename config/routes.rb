@@ -25,5 +25,11 @@ Rails.application.routes.draw do
   resources :sessions
   namespace :admin do
     resources :users
+    resources :products do
+      collection do
+        get :home
+        get :search
+      end
+    end
   end
 end

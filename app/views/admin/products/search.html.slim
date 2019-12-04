@@ -1,0 +1,40 @@
+商品を検索する
+
+= form_with url:'/admin/products/search', method: 'get', local: true do |f|
+  .form-group
+    = f.label :name, '商品名'
+    = f.text_field :search, class: 'form-control'
+  .form-group
+    = f.label :description, '商品詳細'
+    = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :from, '値段'
+    = f.number_field :from,min:10,max:10000, class: 'form-control'
+    |
+     ~
+    |
+    = f.number_field :to,min:10,max:10000, class: 'form-control'
+  /.form-group
+    = f.label :check1, "セール品で検索する"
+    = check_box_tag :check1
+  /.form-group
+    = select_tag(:kind)
+  = f.submit '検索する', class: 'btn btn-primary'
+
+  - @products_search.each do |product|
+    .product_box
+      table border="1"
+        tr
+          th.h4 = link_to product.name, product_path(product.id)
+        tr
+          td 値段：#{product.price}円
+        tr
+          td
+            #image
+              = image_tag product.image.to_s
+        tr
+          td 種類：#{product.kind}
+        tr
+          td = product.updated_at.strftime('%Y/%m/%d')
+        tr
+          td お気に入り：#{product.favorited_users.count}
