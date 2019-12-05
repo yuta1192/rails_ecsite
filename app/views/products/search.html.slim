@@ -7,221 +7,31 @@ div
   検索結果：
   = @counts
 
-  ul.tabnav
-    li
-      a[href="#tab00"]
-        | 名前順
-    li
-      a[href="#tab01"]
-        | 高い順
-    li
-      a[href="#tab02"]
-        | 安い順
-    li
-      a[href="#tab03"]
-        | 新しい順
-    li
-      a[href="#tab04"]
-        | 古い順
-    li
-      a[href="#tab05"]
-        | おすすめ
-  .tabcontent
-    #tab00
-      |
-      div
-        - @product_search.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
+.row
+  - @product_search.each do |product|
+    .col-md-4
+      table border="1"
+        tr
+          th.h4 = link_to product.name, product_path(product.id)
+        tr
+          td 値段：#{product.price}円
+        tr
+          td
+            #image
+              = image_tag product.image.to_s
+              - if logged_in?
+                - if current_user.already_favorited?(product)
+                  .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                    i.fas.fa-star.iine
+                - else
+                  .icon = button_to product_favorites_path(product.id) do
+                    i.far.fa-star.iine
+        tr
+          td 種類：#{product.kind}
+        tr
+          td = product.updated_at.strftime('%Y/%m/%d')
+        tr
+          td お気に入り：#{product.favorited_users.count}
 
-        .div
-      = paginate @product_search
-
-    #tab01
-      |
-      ul
-        - @price_high.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
-
-        .div
-      = paginate @price_high
-
-    #tab02
-      |
-      ul
-        - @price_low.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
-
-        .div
-      = paginate @price_low
-
-    #tab03
-      |
-      ul
-        - @latest.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
-
-        .div
-      = paginate @latest
-
-    #tab04
-      |
-      ul
-        - @oldest.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
-
-        .div
-      = paginate @oldest
-
-    #tab05
-      |
-      ul
-        - if @favorite_count.present?
-        - @favorite_count.each do |product|
-          .product_box
-            table border="1"
-              tr
-                th.h4 = link_to product.name, product_path(product.id)
-              tr
-                td 値段：#{product.price}円
-              tr
-                td
-                  #image
-                    = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
-              tr
-                td 種類：#{product.kind}
-              tr
-                td = product.updated_at.strftime('%Y/%m/%d')
-              tr
-                td お気に入り：#{product.favorited_users.count}
-
-
-javascript:
-  jQuery(function($){
-      $('.tabcontent > div').hide();
-
-      $('.tabnav a').click(function () {
-          $('.tabcontent > div').hide().filter(this.hash).fadeIn();
-
-          $('.tabnav a').removeClass('active');
-          $(this).addClass('active');
-
-          return false;
-      }).filter(':eq(0)').click();
-  });
+    .div
+  = paginate @product_search
