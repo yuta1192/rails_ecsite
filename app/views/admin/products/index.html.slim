@@ -1,4 +1,5 @@
 - if current_user.admin?
+.row
   商品一覧
   - @product_search.each do |product|
     .product_box
@@ -21,6 +22,6 @@
           td
             = link_to '編集', edit_admin_product_path(product), class: 'btn btn-primary mr-3'
             = link_to '削除', [:admin, product], method: :delete, data: { confirm: "商品「#{product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
-
-    .div
-  = paginate @product_search
+  .mb-3
+    = paginate @product_search
+    = page_entries_info @product_search

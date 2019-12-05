@@ -38,7 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'slim-rails'
 gem 'bcrypt', '3.1.12'
 gem 'faker'
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari'
 gem 'byebug'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '3.3.7'

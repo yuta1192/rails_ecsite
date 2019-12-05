@@ -12,8 +12,9 @@ html
 
 
   body
-    = render 'layouts/header'
-    div.container
-    #wrapper
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+      = render 'layouts/header'
       = yield
       = render 'layouts/footer'

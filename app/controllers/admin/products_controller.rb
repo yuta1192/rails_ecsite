@@ -2,7 +2,12 @@ class Admin::ProductsController < ApplicationController
   before_action :user_login, :user_admin
 
   def search
-    @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to])
+    @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+    if params[:from].present? && params[:to].present?
+      if params[:from] > params[:to]
+        redirect_to search_admin_products_path, notice: "error:下限が上限を上回っています"
+      end
+    end
   end
 
   def index

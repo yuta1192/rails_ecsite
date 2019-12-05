@@ -26,13 +26,17 @@ class Product < ApplicationRecord
   scope :oldest, -> { order(created_at: :asc) }
 
   scope :price_zone, -> from, to {
-    if from.blank? && to.blank?
-    elsif from.blank?
-      where('price <= ?', to)
-    elsif to.blank?
-      where('price >= ?', from)
-    else
-      where(price: from..to)
-    end
+    return Product.all if from.blank? && to.blank?
+    return Product.where('price <= ?', to) if from.blank?
+    return Product.where('price >= ?', from) if to.blank?
+    return Product.all if from > to
+
+    Product.where(price: from..to)
+  }
+
+  scope :select_kind, -> kind {
+    return Product.all unless kind
+    return Product.all if kind.blank?
+    Product.where(kind: "#{kind}")
   }
 end
