@@ -1,4 +1,6 @@
 - if current_user.admin?
+
+  = link_to 'エクスポート', admin_users_path(format: :csv), class: 'btn btn-primary mb-3'
   .mb-3
   table.table.table-hover
     thead.thead-default

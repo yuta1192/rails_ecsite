@@ -3,6 +3,11 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @users.generate_csv, filename: "users-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
+    end
   end
 
   def show
