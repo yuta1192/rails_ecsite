@@ -37,7 +37,26 @@ Things you may want to cover:
 
 ・uniqをすると重複している値をまとめることができる
 
-・ActionView::Template::Error (undefined method `rel' for #<Kaminari::Helpers::Paginator::PageProxy:0x00007fc42e96bd98>):errorが出てくる
+・ActionView::Template::Error (undefined method 'rel' for #<Kaminari::Helpers::Paginator::PageProxy:0x00007fc42e96bd98>):errorが出てくる
 kaminariのテンプレート使おうとしてエラー
+→kaminariのバージョン古かっただけ
 
-・
+12/5
+
+・ソート機能の追加
+→https://qiita.com/tsubasa_upset/items/f53fb71bda5b18be949f　見ながら自分のに照らし合わせて作成
+→ダメだった
+→サーチは無理やり昇順ボタンを作成して切り替えられるように変更
+
+・ソート機能追加やり方変更
+→https://qiita.com/DURIAN_JADE/items/61fd692f04600a6cf9ff
+→helperを使うときはちゃんとincludeしましょう。helperはモジュールです。
+→一つできればあとはカラムを変更して使うだけで使用可能！
+
+・メーラー機能追加
+→メーラー機能作成完了。
+→しかし、payがまだまだ未完成だったのでこちらの修正も忘れないように
+
+・エクスポート機能
+→まずはadminがuser一覧をエクスポートできるようにする。
+→難なくクリア
