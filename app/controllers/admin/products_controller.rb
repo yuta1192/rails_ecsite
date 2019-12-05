@@ -1,8 +1,19 @@
 class Admin::ProductsController < ApplicationController
   before_action :user_login, :user_admin
+  include Admin::ProductsHelper
 
   def search
-    @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+    if params[:commit] == "全て昇順▲"
+      @products_search = Product.search(params[:search]).order(name: :asc).description(params[:description]).order(description: :asc).price_zone(params[:from],params[:to]).order(price: :asc).select_kind(params[:kind]).page(params[:page])
+    elsif params[:commit] == "名前昇順▲"
+      @products_search = Product.search(params[:search]).order(name: :asc).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+    elsif params[:commit] == "詳細昇順▲"
+      @products_search = Product.search(params[:search]).description(params[:description]).order(description: :asc).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+    elsif params[:commit] == "値段昇順▲"
+      @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).order(price: :asc).select_kind(params[:kind]).page(params[:page])
+    else
+      @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+    end
     if params[:from].present? && params[:to].present?
       if params[:from] > params[:to]
         redirect_to search_admin_products_path, notice: "error:下限が上限を上回っています"
@@ -12,7 +23,8 @@ class Admin::ProductsController < ApplicationController
 
   def index
     @products = Product.search(params[:search]).page(params[:page]).per(15)
-    @product_search = Product.search(params[:search]).order('name').page(params[:page]).per(15)
+    #@product_search = Product.search(params[:search]).order('name').page(params[:page]).per(50)
+    @product_search = Product.search(params[:search]).page(params[:page]).per(50).order(sort_column + ' ' + sort_direction)
   end
 
   def new
@@ -67,9 +79,5 @@ class Admin::ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :kind, :image)
-  end
-
-  def admin_products_search
-
   end
 end

@@ -1,4 +1,17 @@
 class User < ApplicationRecord
+  def self.csv_attributes
+    ["id", "name", "email", "address", "tel", "created_at", "admin"]
+  end
+
+  def self.generate_csv
+    CSV.generate(headers: true) do |csv|
+      csv << csv_attributes
+      all.each do |user|
+        csv << csv_attributes.map{|attr| user.send(attr)}
+      end
+    end
+  end
+
   has_many :cart_items
   has_many :products, through: :comments
   has_many :comments
