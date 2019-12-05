@@ -41,10 +41,12 @@ gem 'faker'
 gem 'kaminari'
 gem 'byebug'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '3.4.1'
+gem 'bootstrap-sass'
 gem 'carrierwave'
-gem 'font-awesome-sass', '~> 5.4.1'
+gem 'font-awesome-sass'
 gem 'payjp'
+gem 'rails-i18n'
+gem 'csv'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
