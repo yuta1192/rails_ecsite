@@ -29,16 +29,17 @@ class CartItemsController < ApplicationController
   end
 
   def pay
+    @cart_items = current_user.cart_items.all
+    @total_price = 0
+    @cart_items.each do |cart_item|
+      @total_price += (cart_item.product.price*cart_item.num)
+    end
     Payjp.api_key = 'sk_test_215ed6c716c8280b40d237d9'
     charge = Payjp::Charge.create(
-    :amount => 3500,
+    :amount => @total_price,
     :card => params['payjp-token'],
     :currency => 'jpy',
     )
-    @user = User.find(params[:id])
-    @carts = CartItem.all
-    @cart_items = @user.cart_items.all
-    PurchaseMailer.creation_email(@cart_items).deliver_now
   end
 
   private
