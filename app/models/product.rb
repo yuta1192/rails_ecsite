@@ -1,8 +1,10 @@
 class Product < ApplicationRecord
+  validates :stock, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :price, presence: true
   validates :description, presence: true
   validates :kind, presence: true
+  has_many :payments
   has_many :cart_items
   has_many :users, through: :comments
   has_many :comments

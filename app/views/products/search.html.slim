@@ -1,7 +1,12 @@
 p 検索
-= form_tag(search_products_path,:method => 'get') do
-  = text_field_tag :search
-  = submit_tag 'Search', :name => nil
+= form_with url:'/products/search', method: 'get', local: true do |f|
+  .form-group
+    = f.label :name, '商品名'
+    = f.text_field :search, class: 'form-control'
+  .form-group
+    = f.label :kind, '種類'
+    = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
+  = f.submit '検索する', class: 'btn btn-primary'
 
 div
   検索結果：

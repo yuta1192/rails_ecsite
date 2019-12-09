@@ -1,21 +1,111 @@
-h3 人気ランキング
-div
+- provide(:title, "Home")
+
+/左メニュー（カテゴリー）
+
+.col-md-3.pull-left.left-menu-height-max
+  .panel.panel-success
+    .panel-heading
+      h2.panel-title
+        | カテゴリー
+    .list-group
+      - @kinds.each do |kind|
+        a.list-group-item[href=""]
+          |
+          = kind
+          span.badge
+            |
+            = @products.where(kind: kind).count
+
+  .panel.panel-warning
+    .panel-heading
+      h2.panel-title
+        | 種類（ズボンとか）
+    .list-group
+      a.list-group-item[href="#"]
+        | りんご
+        span.badge
+          | 5
+      a.list-group-item[href="#"]
+        | みかん
+        span.badge
+          | 3
+      a.list-group-item[href="#"]
+        | いちご
+      a.list-group-item[href="#"]
+        | めろん
+
+/右メニュー（セール情報やイベントなど）
+
+.col-md-3.pull-right
+  ul.nav.nav-pills.nav-stacked.mr-auto
+    li.active
+      a[href="#"]
+        | ダッシュボード
+    li
+      a[href="#"]
+        | サーバー１
+    li
+      a[href="#"]
+        | サーバー２
+    li
+      a[href="#"]
+        | サーバー３
+    li
+      a[href="#"]
+        | サーバー３
+    li
+      a[href="#"]
+        | サーバー３
+    li
+      a[href="#"]
+        | サーバー３
+    li
+      a[href="#"]
+        | サーバー３
+    li
+      a[href="#"]
+        | サーバー３
+
+/中央
+
+h4 人気商品ランキング
+div.clearfix
   - @all_ranks.each.with_index(1) do |product, i|
-    .ranking_box
-      table border="1"
-        tr
-          th.h4 第 #{i} 位
-        tr
-          td
-            = image_tag product.image.to_s
-            - if logged_in?
-              - if current_user.already_favorited?(product)
-                .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                  i.fas.fa-star.iine
-              - else
-                .icon = button_to product_favorites_path(product.id) do
-                  i.far.fa-star.iine
-        tr
-          td.h4 #{product.name}
-        tr
-          td.h4 お気に入り：#{product.favorites.count}
+    -if i <= 3
+      .col-md-2.ranking_box
+        table border="1"
+          tr
+            th.h4 第 #{i} 位 !すごい！
+          tr
+            td
+              = image_tag product.image.to_s
+              - if logged_in?
+                - if current_user.already_favorited?(product)
+                  .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                    i.fas.fa-star.iine
+                - else
+                  .icon = button_to product_favorites_path(product.id) do
+                    i.far.fa-star.iine
+          tr
+            td.h4 #{product.name}
+          tr
+            td.h4 お気に入り：#{product.favorites.count}
+    - else
+      .col-md-2
+        table border="1"
+          tr
+            th.h4 第 #{i} 位
+          tr
+            td
+              = image_tag product.image.to_s
+              - if logged_in?
+                - if current_user.already_favorited?(product)
+                  .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                    i.fas.fa-star.iine
+                - else
+                  .icon = button_to product_favorites_path(product.id) do
+                    i.far.fa-star.iine
+          tr
+            td.h4 #{product.name}
+          tr
+            td.h4 お気に入り：#{product.favorites.count}

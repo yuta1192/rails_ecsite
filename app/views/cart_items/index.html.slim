@@ -24,8 +24,9 @@ div
 
   p 小計： #{@total_price}
 
-= form_tag(action: :pay, method: :post) do
-  <script type="text/javascript" src="https://checkout.pay.jp" class="payjp-button" data-key="pk_test_0550d800b2ecede01031d30d"></script>
+- if @cart_items.present?
+  = form_tag(action: :pay, method: :post) do
+    <script type="text/javascript" src="https://checkout.pay.jp" class="payjp-button" data-key="pk_test_0550d800b2ecede01031d30d"></script>
 
 p そのユーザーがカートに入れた商品のみを表示、購入できるようにする。
 p 購入はAPIなどの機能をしようする。
