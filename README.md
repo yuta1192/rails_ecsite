@@ -73,4 +73,18 @@ kaminariのテンプレート使おうとしてエラー
 
 ・ホームをzozotownっぽくする
 →cssがむずすぎる件、clearfixがよくわからなくて結構詰まってた。でもクリアフィックスするタイミングは回り込みたくないときに使えばいいんだねって
-→sampleを使用すると配列から一つランダムに取り出す　a = ["a","b","c"] a.sample => a か b か cでる
+→.sampleメソッドを使用すると配列から一つランダムに取り出す　a = ["a","b","c"] a.sample => a か b か cでる
+
+
+12/9
+
+・link_toでパラメータを渡す際は第３引数くらいに(params: event.id)などのようにparamsに渡すものを入れればおk
+
+・numericality: { only_integer: true, greater_than: 0 } numericality(数値のみが使われていることを指定するバリデーション),greater_than(指定された値よりも大きくなければならないバリデーション)
+
+・なんとかpayjpの処理でstockを更新することに成功！cart_itemsコントローラのpayアクション中にupdate処理を書くだけだったが大きくぜんしん。ただ今の状態だとstockがマイナスになったりエラー出なかったりエラー出た場合に処理できてなかったりするから変更必要なり。
+
+redirect_to cart_items_path(current_user)だとダメだった。
+エラー文みると最後にand return　つけろとのこと。できた。
+
+redirect_toにnotice加えればエラー文表示可能
