@@ -1,4 +1,4 @@
-- provide(:title, "Home")
+- provide(:title, "ホーム")
 
 /左メニュー（カテゴリー）
 .row
@@ -11,17 +11,15 @@
         - @kinds.each do |kind|
           .list-group-item
             |
-            = form_with url:'/products/search', method: 'get', local: true do |f|
-              = f.hidden_field :kind, :value => kind
-              = f.submit kind, class: 'btn btn-primary'
-              span.badge
-                |
-                = @products.where(kind: kind).count
+            = link_to kind, search_products_path(kind: kind)
+            span.badge
+              |
+              = @products.where(kind: kind).count
 
     .panel.panel-warning
       .panel-heading
         h2.panel-title
-          | 種類（ズボンとか）
+          | デザイナー
       .list-group
         a.list-group-item[href="#"]
           | りんご
@@ -33,35 +31,43 @@
             | 3
         a.list-group-item[href="#"]
           | いちご
+          span.badge
+            | 3
         a.list-group-item[href="#"]
           | めろん
+          span.badge
+            | 3
+
+    .panel.panel-primary
+      .panel-heading
+        h2.panel-title
+          | あなたにおすすめ
+      .list-group
+        a.list-group-item[href="#"]
+          | りんご
+          span.badge
+            | 5
+        a.list-group-item[href="#"]
+          | みかん
+          span.badge
+            | 3
+        a.list-group-item[href="#"]
+          | いちご
+          span.badge
+            | 3
+        a.list-group-item[href="#"]
+          | めろん
+          span.badge
+            | 3
 
   /中央
 
   .col-md-6
-    h4 人気商品ランキング
-    div
+    h2 人気商品ランキング
+    .row
       - @all_ranks.each.with_index(1) do |product, i|
-        -if i <= 3
-          .ranking_box
-            table border="1"
-              tr
-                th.h4 第 #{i} 位 !すごい！
-              tr
-                td
-                  = image_tag product.image.to_s
-                  - if logged_in?
-                    - if current_user.already_favorited?(product)
-                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                        i.fas.fa-star.iine
-                  - else
-                    .icon = button_to product_favorites_path(product.id) do
-                      i.far.fa-star.iine
-              tr
-                td.h4 #{product.name}
-              tr
-                td.h4 お気に入り：#{product.favorites.count}
-        - else
+        - if i <= 3
+          .ranking.col-md-4
             table border="1"
               tr
                 th.h4 第 #{i} 位
@@ -77,8 +83,23 @@
                       i.far.fa-star.iine
               tr
                 td.h4 #{product.name}
+        - else
+          .ranking.col-md-3
+            table border="1"
               tr
-                td.h4 お気に入り：#{product.favorites.count}
+                th.h4 第 #{i} 位
+              tr
+                td
+                  = image_tag product.image.to_s
+                  - if logged_in?
+                    - if current_user.already_favorited?(product)
+                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                        i.fas.fa-star.iine
+                  - else
+                    .icon = button_to product_favorites_path(product.id) do
+                      i.far.fa-star.iine
+              tr
+                td.h4 #{product.name}
 
 
   /右メニュー（セール情報やイベントなど）
@@ -87,7 +108,39 @@
     ul.nav.nav-pills.nav-stacked.mr-auto
       li.active
         a[href="#"]
-          | ダッシュボード
+          | イベント
+      li
+        a[href="#"]
+          | サーバー１
+      li
+        a[href="#"]
+          | サーバー２
+      li
+        a[href="#"]
+          | サーバー３
+      li
+        a[href="#"]
+          | サーバー１
+      li
+        a[href="#"]
+          | サーバー２
+      li
+        a[href="#"]
+          | サーバー３
+      li
+        a[href="#"]
+          | サーバー１
+      li
+        a[href="#"]
+          | サーバー２
+      li
+        a[href="#"]
+          | サーバー３
+
+    ul.nav.nav-pills.nav-stacked.mr-auto
+      li.active
+        a[href="#"]
+          | ニュース
       li
         a[href="#"]
           | サーバー１

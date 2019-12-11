@@ -4,12 +4,12 @@ class Product < ApplicationRecord
   validates :price, presence: true
   validates :description, presence: true
   validates :kind, presence: true
-  has_many :payments
   has_many :cart_items
   has_many :users, through: :comments
   has_many :comments
   has_many :favorites
   has_many :favorited_users, through: :favorites, source: :user
+  has_many :product_purchases
   # product.name
   def self.search(search)
     return Product.all unless search

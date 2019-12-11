@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :favorite
       resources :cart_items do
         collection do
+          get :history
           post 'pay/:id' => 'cart_items#pay', as: 'pay'
         end
       end
