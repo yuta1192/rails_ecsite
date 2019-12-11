@@ -1,3 +1,5 @@
+- provide(:title, "カート")
+
 p ユーザーのカート商品一覧
 div
   - @carts.where(user_id: current_user.id).order(:id).each do |cart_item|
