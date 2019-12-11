@@ -129,16 +129,8 @@ footer ul li {
 }
 
 img {
-   width: 150px;
-   height: 180px; /* 画像幅以上拡大しないようにする指定 */
-}
-
-.ranking_box {
-  display: inline-flex;
-  flex-wrap: wrap;
-  margin: 5px;
-  padding: 10px;
-  position: relative;
+   width: 100%;
+   height: 100%; /* 画像幅以上拡大しないようにする指定 */
 }
 
 .ranking_box .icon{
@@ -322,4 +314,21 @@ img {
 /* home 右メニュー */
 .left-menu-height-max {
   height: 100%;
+}
+
+/* ranking */
+.ranking.col-md-4 {
+  padding: 1px;
+}
+
+.ranking.col-md-4 img {
+  height: 250px;
+}
+
+.ranking.col-md-3 {
+  padding: 1px;
+}
+
+.ranking.col-md-3 img {
+  height: 180px;
 }

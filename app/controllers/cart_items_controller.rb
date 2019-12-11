@@ -38,7 +38,8 @@ class CartItemsController < ApplicationController
     @cart_items.each do |cart_item|
       if cart_item.product.stock >= cart_item.num
       else
-        redirect_to cart_items_path(current_user), :notice => "#{cart_item.product.name}は在庫数#{cart_item.product.stock}以上は購入できません！" and return
+        cart_item.update_attributes(num: cart_item.product.stock)
+        redirect_to cart_items_path(current_user), :notice => "申し訳ござません。選択された注文は、この商品の最大注文数量を超過しています。カート内の数量が最大注文数量に変更されました" and return
       end
     end
 
@@ -52,12 +53,13 @@ class CartItemsController < ApplicationController
     @cart_items.each do |cart_item|
       @after_stock = cart_item.product.stock - cart_item.num
       cart_item.product.update_attributes(stock: @after_stock)
+
     end
   end
 
   private
 
     def cart_params
-      params.require(:cart_item).permit(:id, :product_id, :user_id, :num)
+      params.require(:cart_item).permit(:product_id, :user_id, :num)
     end
 end
