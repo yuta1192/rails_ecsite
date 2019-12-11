@@ -8,4 +8,6 @@ div
 div
   = link_to 'お気に入り', favorite_user_path(current_user)
 div
+  = link_to '購入履歴', history_cart_items_path(current_user)
+div
   = link_to 'ユーザー情報を変更する', edit_user_path(current_user)

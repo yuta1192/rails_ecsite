@@ -88,3 +88,25 @@ redirect_to cart_items_path(current_user)だとダメだった。
 エラー文みると最後にand return　つけろとのこと。できた。
 
 redirect_toにnotice加えればエラー文表示可能
+
+
+12/10
+
+どうしてもカテゴリーのリンク先を検索した後のカテゴリー別のページにできない
+→link_to、routesは合っているはず。パラメータがおかしいのかも。
+コントローラは、@kinds = @products.map{|product|[product.kind]}.uniq　となっている
+→これだと配列の中に配列があるので、パラメータが配列になっている。
+@kinds = @products.all.pluck(:kind).uniq　に変更して見た
+→できた！
+
+payjpで購入数が多い際の文言変更
+→カゴの中の商品数を在庫数に変更するように機能を変更
+
+viewを色々いじって見やすくして見た
+→まだまだ直す点が多すぎる
+
+商品購入履歴ページ、routes作成
+
+商品購入履歴modelとして"ProductPurchase"モデルを作成
+→ここに購入した商品（カート）に入っていた情報を購入完了と同時に入れる。
+→そのあとにカート内の商品を消す。

@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :comments
   has_many :favorites
   has_many :favorited_products, through: :favorites, source: :product
+  has_many :product_purchases
   def already_favorited?(product)
     self.favorites.exists?(product_id: product.id)
   end
