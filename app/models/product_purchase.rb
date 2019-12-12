@@ -1,5 +1,4 @@
 class ProductPurchase < ApplicationRecord
   belongs_to :user
-  belongs_to :cart_item
-  belongs_to :product
+  belongs_to :product, optional: true
 end
