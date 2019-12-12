@@ -1,42 +1,38 @@
-p 検索
-= form_with url:'/products/search', method: 'get', local: true do |f|
-  .form-group
-    = f.label :name, '商品名'
-    = f.text_field :search, class: 'form-control'
-  .form-group
-    = f.label :kind, '種類'
-    = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
-  = f.submit '検索する', class: 'btn btn-primary'
+.row
+  .col-md-12
+    p 検索
+    = form_with url:'/products/search', method: 'get', local: true do |f|
+      .form-group
+        = f.label :name, '商品名'
+        = f.text_field :search, class: 'form-control'
+      .form-group
+        = f.label :kind, '種類'
+        = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
+      = f.submit '検索する', class: 'btn btn-primary'
 
-div
-  検索結果：
-  = @counts
+    div
+      h4 検索結果：#{@counts}
 
 .row
-  - @product_search.each do |product|
-    .col-md-4
-      table border="1"
-        tr
-          th.h4 = link_to product.name, product_path(product.id)
-        tr
-          td 値段：#{product.price}円
-        tr
-          td
-            #image
-              = image_tag product.image.to_s
-              - if logged_in?
-                - if current_user.already_favorited?(product)
-                  .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                    i.fas.fa-star.iine
-                - else
-                  .icon = button_to product_favorites_path(product.id) do
-                    i.far.fa-star.iine
-        tr
-          td 種類：#{product.kind}
-        tr
-          td = product.updated_at.strftime('%Y/%m/%d')
-        tr
-          td お気に入り：#{product.favorited_users.count}
+  .col-md-12
+    - @product_search.each do |product|
+      .search.col-md-2
+        table
+          tr
+            td
+              #image
+                = image_tag product.image.to_s
+                - if logged_in?
+                  - if current_user.already_favorited?(product)
+                    .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                      i.fas.fa-star.iine
+                  - else
+                    .icon = button_to product_favorites_path(product.id) do
+                      i.far.fa-star.iine
+          tr
+            td.h4 = link_to product.name, product_path(product.id)
+          tr
+            td 値段：#{product.price}円
 
     .div
   = paginate @product_search

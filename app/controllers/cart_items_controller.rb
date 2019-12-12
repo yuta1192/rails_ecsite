@@ -2,6 +2,13 @@ class CartItemsController < ApplicationController
   def show
   end
 
+  def history
+    @product_purchases = current_user.product_purchases.all.order(created_at: :desc)
+  end
+
+  def specification
+  end
+
   def index
     @user = User.find(params[:id])
     @carts = CartItem.all
@@ -51,10 +58,16 @@ class CartItemsController < ApplicationController
     )
     # 購入処理が終わったら全てのcart_item上の商品の在庫を購入数減らす
     @cart_items.each do |cart_item|
+      "transaction処理（購入したものを無効にする）を実装" unless cart_item.product.stock >= cart_item.num
+    end
+    @cart_items.each do |cart_item|
       @after_stock = cart_item.product.stock - cart_item.num
       cart_item.product.update_attributes(stock: @after_stock)
-
+      cart_item.destroy
+      ProductPurchase.create(user_id: cart_item.user_id, product_id: cart_item.product_id, num: cart_item.num)
     end
+    @cart_ids = CartItem.all.map {|cart_id| cart_id.id}
+    PurchaseMailer.creation_email(@cart_ids).deliver_later
   end
 
   private

@@ -1,17 +1,1 @@
 | 商品のご購入ありがとうございました！
-
-ul
-  li
-    | {User.find(@cart_items.first.user_id).name}様、商品のご購入ありがとうございます。
-    | 以下の商品が購入した品物になります。
-  li
-    | ご購入商品：
-    - @cart_items.each do |cart_item|
-      = cart_item.product.name
-      = cart_item.num
-      = cart_item.product.price*cart_item.num
-
-    | 以上、#{@cart_items.count}点の購入になります。
-  li
-    | ご返品はこちらまで、１週間以内まで受け付けております。
-    | 購入レシートをお忘れないようお願いします。
