@@ -1,0 +1,89 @@
+- provide(:title, "明細書発行")
+.row
+  .col-md-12
+    .text-center
+      h3 注文番号#{@product_purchase.id}の領収書（明細書）
+      br
+      p このページをコピーしてご利用ください
+      br
+    .col-md-8
+      p 発行日：#{Date.today.strftime('%Y/%m/%d')}
+      div
+      p 注文日：#{@product_purchase.created_at.strftime('%Y/%m/%d')}
+      div
+      p ファッションECサイト 注文番号：#{@product_purchase.id}
+      div
+      p ご請求額： #{@product_purchase.product.price} 円
+    .col-md-4
+      .text-right
+        br
+          p __________________________様
+
+
+.row
+  .col-md-12
+    table.table.table-bordered
+      thead
+        tr
+          th
+            .text-center
+              h4 2019年10月28日に発送済み(発送日のカラムを追加)
+
+      tbody
+        tr
+          td
+            .col-md-8
+              p 注文商品
+              p #{@product_purchase.num} 点
+              = link_to @product_purchase.product.name, product_path(@product_purchase.product)
+            .col-md-4
+              .text-right
+                p 価格
+                p #{@product_purchase.num*@product_purchase.product.price} 円
+
+      tbody
+        tr
+          td
+            p お届け先住所：
+            p #{current_user.name}
+            p 郵便番号
+            p #{current_user.address}
+
+            p 配送方法：
+            p お急ぎ便
+
+.row
+  .col-md-12
+    table.table.table-bordered
+      thead
+        tr
+          th
+            .text-center
+              h4 支払い情報
+      tbody
+        tr
+          td
+            .col-md-8
+              p 支払い方法：
+              p MasterCard | カード番号の一部： 〇〇
+
+              p 請求先住所：
+              p 名前
+              p 郵便番号
+              p 住所
+            .col-md-4
+              .text-right
+                p 商品の小計：	#{@product_purchase.num*@product_purchase.product.price} 円
+                p 配送料・手数料：	0 円
+                p -----
+                p 注文合計：	#{@product_purchase.num*@product_purchase.product.price} 円
+                p -----
+                p ご請求額：	#{@product_purchase.num*@product_purchase.product.price} 円
+      tbody
+        tr
+          td
+            .col-md-4
+              p クレジットカードへの請求
+            .col-md-8
+              .text-right
+                MasterCard（下4けたが〇〇）: #{@product_purchase.created_at.strftime('%Y/%m/%d')}:	#{@product_purchase.num*@product_purchase.product.price} 円
