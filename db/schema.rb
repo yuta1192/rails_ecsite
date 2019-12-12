@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_12_10_075443) do
     t.integer "user_id"
     t.integer "product_id"
     t.integer "num"
+    t.integer "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
