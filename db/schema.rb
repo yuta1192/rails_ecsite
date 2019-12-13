@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_10_075443) do
+ActiveRecord::Schema.define(version: 2019_12_13_032355) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -64,6 +64,9 @@ ActiveRecord::Schema.define(version: 2019_12_10_075443) do
     t.string "kind"
     t.string "image"
     t.integer "stock", default: 0, null: false
+    t.string "designer", default: "unknown", null: false
+    t.boolean "sale", default: false, null: false
+    t.string "size", default: "M", null: false
   end
 
   create_table "rankings", force: :cascade do |t|
