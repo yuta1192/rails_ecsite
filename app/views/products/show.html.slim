@@ -27,17 +27,20 @@
       = @product.stock
       .div
       - if logged_in?
-        - if @cart_item.present?
-          p 既にカートにあります
-          = link_to "カートへ", cart_items_path(current_user)
+        - if @product.stock > 0
+          - if @cart_item.present?
+            p 既にカートにあります
+            = link_to "カートへ", cart_items_path(current_user)
+          - else
+            div
+              = form_for(@cart_add, url: cart_items_path(current_user), method: :post) do |f|
+                = f.hidden_field :product_id, :value => @product.id
+                = f.hidden_field :user_id, :value => current_user.id
+                = f.label :num, "数量"
+                = f.select :num, @max_num
+                = f.submit "カートに入れる", class: "btn btn-primary"
         - else
-          div
-            = form_for(@cart_add, url: cart_items_path(current_user), method: :post) do |f|
-              = f.hidden_field :product_id, :value => @product.id
-              = f.hidden_field :user_id, :value => current_user.id
-              = f.label :num, "数量"
-              = f.select :num, @max_num
-              = f.submit "カートに入れる", class: "btn btn-primary"
+          p 在庫切れです。再入荷までお待ちください。
 
   .row
     .col-md-12
