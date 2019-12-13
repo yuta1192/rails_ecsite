@@ -10,9 +10,11 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @cart_add = CartItem.new
     @cart_item = CartItem.where(user_id: current_user, product_id: @product.id)
-    @relation_products = Product.where(kind: @product.kind).order("RANDOM()").limit(3)
+    @relation_products = Product.where(kind: @product.kind).order("RANDOM()").limit(6)
     @comments = Comment.where(product_id: @product.id)
     @favorite = Favorite.new
+    @num = 1..@product.stock
+    @max_num = @num.to_a
   end
 
   def search
