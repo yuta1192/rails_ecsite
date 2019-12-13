@@ -6,7 +6,8 @@ class CartItemsController < ApplicationController
     @product_purchases = current_user.product_purchases.all.order(created_at: :desc)
   end
 
-  def specification
+  def confirmation
+    @cart_items = current_user.cart_items.all
   end
 
   def index

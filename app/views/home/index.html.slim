@@ -70,36 +70,36 @@
           .ranking.col-md-4
             table
               tr
-                th.h4 第 #{i} 位
+                th.text-center.h4 第 #{i} 位
               tr
                 td
                   = link_to product_path(product) do
                     = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
+                  - if logged_in?
+                    - if current_user.already_favorited?(product)
+                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                        i.fas.fa-star.iine
+                    - else
+                      .icon = button_to product_favorites_path(product.id) do
+                        i.far.fa-star.iine
               tr
                 td.h4 #{product.name}
         - else
           .ranking.col-md-3
             table
               tr
-                th.h4 第 #{i} 位
+                th.text-center.h4 第 #{i} 位
               tr
                 td
                   = link_to product_path(product) do
                     = image_tag product.image.to_s
-                    - if logged_in?
-                      - if current_user.already_favorited?(product)
-                        .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                          i.fas.fa-star.iine
-                      - else
-                        .icon = button_to product_favorites_path(product.id) do
-                          i.far.fa-star.iine
+                  - if logged_in?
+                    - if current_user.already_favorited?(product)
+                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                        i.fas.fa-star.iine
+                    - else
+                      .icon = button_to product_favorites_path(product.id) do
+                        i.far.fa-star.iine
               tr
                 td.h4 #{product.name}
 
@@ -170,3 +170,19 @@
       li
         a[href="#"]
           | サーバー３
+
+
+button.btn.btn-primary data-target="#exampleModal" data-toggle="modal" type="button"
+  | Launch demo modal
+#exampleModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Modal title
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  ×
+      .modal-body
+        | \...
+      .modal-footer
+        button.btn.btn-secondary data-dismiss="modal" type="button"  Close
+        button.btn.btn-primary type="button"  Save changes

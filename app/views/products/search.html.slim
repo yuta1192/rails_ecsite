@@ -1,38 +1,63 @@
-.row
-  .col-md-12
-    p 検索
-    = form_with url:'/products/search', method: 'get', local: true do |f|
-      .form-group
-        = f.label :name, '商品名'
-        = f.text_field :search, class: 'form-control'
-      .form-group
-        = f.label :kind, '種類'
-        = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
-      = f.submit '検索する', class: 'btn btn-primary'
-
-    div
-      h4 検索結果：#{@counts}
+- provide(:title, "商品サーチ")
 
 .row
   .col-md-12
-    - @product_search.each do |product|
-      .search.col-md-2
-        table
-          tr
-            td
-              #image
-                = image_tag product.image.to_s
-                - if logged_in?
-                  - if current_user.already_favorited?(product)
-                    .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
-                      i.fas.fa-star.iine
-                  - else
-                    .icon = button_to product_favorites_path(product.id) do
-                      i.far.fa-star.iine
-          tr
-            td.h4 = link_to product.name, product_path(product.id)
-          tr
-            td 値段：#{product.price}円
+    .col-md-2
+      div
+        h4 対象商品
+        h3 #{@counts} 件
+      br
+      = form_with url:'/products/search', method: 'get', local: true do |f|
+        .form-group
+          = f.label :name, '商品名'
+          = f.text_field :search, class: 'form-control'
+        .form-group
+          = f.label :kind, '種類'
+          = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
+        = f.submit '検索する', class: 'btn btn-primary'
+      br
+        h3 サイズ
+        p selectで選択できるように
+        p ~xs
+        p s
+        p m
+        p l
+        p xm~
+      br
+        h3 価格タイプ
+        p 通常価格
+        p セール価格
+      br
+        h3 価格
+        p ここに価格バーを出す
+      br
+        p 検索するボタン
 
-    .div
-  = paginate @product_search
+
+    .col-md-10
+      br
+      p 検索結果
+      - @product_search.each do |product|
+        .search.col-md-2
+          table
+            tr
+              td
+                #image
+                  = link_to product_path(product) do
+                    = image_tag product.image.to_s
+                  - if logged_in?
+                    - if current_user.already_favorited?(product)
+                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                        i.fas.fa-star.iine
+                    - else
+                      .icon = button_to product_favorites_path(product.id) do
+                        i.far.fa-star.iine
+          .col-md-6
+            tr
+              td.h4 = link_to product.name, product_path(product.id)
+          .col-md-6.text-right
+            tr
+              td #{product.price}円
+      .row
+        .div
+      = paginate @product_search
