@@ -41,4 +41,29 @@ class Product < ApplicationRecord
     return Product.all if kind.blank?
     Product.where(kind: "#{kind}")
   }
+
+  scope :who_desiner, -> designer {
+    return Product.all unless designer
+    return Product.all if designer.blank?
+    Product.where(designer: "#{designer}")
+  }
+
+  scope :select_size, -> size {
+    return Product.all unless size
+    return Product.all if size.blank?
+    Product.where(size: "#{size}")
+  }
+
+  scope :is_sale?, -> sale {
+    return Product.all unless sale
+    return Product.all if sale.blank?
+    Product.where(sale: sale)
+  }
+
+  scope :stock_valid?, -> valid {
+    return Product.all unless valid
+    return Product.all if valid.blank?
+    return Product.where(stock: 1..100) if valid == "true"
+    Product.all
+  }
 end

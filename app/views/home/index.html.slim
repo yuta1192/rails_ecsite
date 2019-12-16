@@ -21,22 +21,13 @@
         h2.panel-title
           | デザイナー
       .list-group
-        a.list-group-item[href="#"]
-          | りんご
-          span.badge
-            | 5
-        a.list-group-item[href="#"]
-          | みかん
-          span.badge
-            | 3
-        a.list-group-item[href="#"]
-          | いちご
-          span.badge
-            | 3
-        a.list-group-item[href="#"]
-          | めろん
-          span.badge
-            | 3
+        - @designers.each do |designer|
+          .list-group-item
+            |
+            = link_to designer, search_products_path(designer: designer)
+            span.badge
+              |
+              = @products.where(designer: designer).count
 
     .panel.panel-primary
       .panel-heading
@@ -138,6 +129,17 @@
       li
         a[href="#"]
           | サーバー３
+
+    ul.nav.nav-pills.nav-stacked.mr-auto
+      li.active
+        a[href="#"]
+          | セールス商品
+      li
+        a[href="#"]
+          | サーバー１
+      li
+        a[href="#"]
+          | サーバー２
 
     ul.nav.nav-pills.nav-stacked.mr-auto
       li.active
