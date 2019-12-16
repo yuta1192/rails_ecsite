@@ -1,0 +1,8 @@
+- provide(:title, "パスワード再設定")
+
+.row
+  .col-md-12
+    = form_with url: password_resets_path, controller: :password_resets, action: :create, method: :post do |f|
+      = f.label :email
+      = f.email_field :email, class: 'form-control'
+      = f.submit "送信", class: "btn btn-primary"
