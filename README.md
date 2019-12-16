@@ -8,33 +8,35 @@
 
 * BtoC
 
-* 購入までの流れ
-
-1. 顧客が商品を見る
-2. 商品をカートに入れる
-3. カート商品を購入する
-4. 購入商品などの確認
-5. 購入確定
-6. 顧客情報と注文情報から商品発注
-7. 発注後処理
-
 ### フロント側機能
 
 * 顧客機能
 - [x] ログインページ
 - [x] 新規登録ページ
 - [ ] パスワード再発行
+  - メールアドレスを入力
+  - メールアドレス宛に再発行url発送
+  - urlからパスワードを変更
 - [x] 会員情報確認
 - [x] 会員情報修正
 - [x] 注文一覧表示（カート機能）
 - [x] 注文履歴
 - [x] お気に入り
 - [ ] 退会
+  - 退会リンク
+  - 注意文などを記載
+  - はいを押すと退会
+  - user情報と関連する情報全てを削除させる
 
 * トップページ
 - [ ] おすすめ一覧
+  - 売れ筋商品を載せる
+  - 購入された順
 - [ ] 新着一覧
+  - 新着順に表示
 - [ ] セール、イベント情報
+  - セール情報
+  - イベント情報
 - [x] 人気、ランキング
 - [x] 商品カテゴリー
 
@@ -139,28 +141,11 @@
 - [ ] 一覧、詳細
 - [ ] 削除、編集
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* セール、イベント
+- [ ] 削除、編集
+- [ ] 一覧、詳細
+- [ ] 追加、新規登録
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 
 今回の反省点
 ・要件定義、詳細設計をしっかりと作るべきだった。
