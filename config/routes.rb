@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+  get 'password_resets/edit'
   root 'home#index'
   resources :home do
     collection do
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
     resources :product_purchases, only: [:index, :show]
   end
   resources :sessions
+  resources :password_resets, only: [:new, :create, :edit, :update]
   namespace :admin do
     resources :users
     resources :products do

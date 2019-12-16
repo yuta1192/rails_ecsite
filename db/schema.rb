@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_032355) do
+ActiveRecord::Schema.define(version: 2019_12_16_071429) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 2019_12_13_032355) do
     t.datetime "updated_at", null: false
     t.string "remember_digest"
     t.boolean "admin", default: false, null: false
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
