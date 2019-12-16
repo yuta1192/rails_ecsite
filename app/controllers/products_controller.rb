@@ -19,9 +19,9 @@ class ProductsController < ApplicationController
 
   def search
     @products = Product.search(params[:search]).page(params[:page]).per(18)
-    @product_search = Product.search(params[:search]).order('name').select_kind(params[:kind]).page(params[:page]).per(18)
-    @search_count = Product.search(params[:search]).select_kind(params[:kind]).count
-    @counts = @search_count.zero? ? "見つかりませんでした。" : @search_count
+    @product_search = Product.search(params[:search]).order('name').select_kind(params[:kind]).who_desiner(params[:designer]).select_size(params[:size]).is_sale?(params[:sale]).price_zone(params[:from],params[:to]).stock_valid?(params[:valid]).page(params[:page]).per(18)
+    @search_count = Product.search(params[:search]).select_kind(params[:kind]).who_desiner(params[:designer]).select_size(params[:size]).is_sale?(params[:sale]).price_zone(params[:from],params[:to]).stock_valid?(params[:valid]).count
+    @counts = @search_count.zero? ? "0" : @search_count
     @price_high = @products.price_high
     @price_low = @products.price_low
     @latest = @products.latest
