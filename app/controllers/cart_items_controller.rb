@@ -61,11 +61,12 @@ class CartItemsController < ApplicationController
     @cart_items.each do |cart_item|
       "transaction処理（購入したものを無効にする）を実装" unless cart_item.product.stock >= cart_item.num
     end
+    @order_id = Payjp::Charge.all.first.id
     @cart_items.each do |cart_item|
       @after_stock = cart_item.product.stock - cart_item.num
       cart_item.product.update_attributes(stock: @after_stock)
       cart_item.destroy
-      ProductPurchase.create(user_id: cart_item.user_id, product_id: cart_item.product_id, num: cart_item.num)
+      ProductPurchase.create(user_id: cart_item.user_id, product_id: cart_item.product_id, num: cart_item.num, order_id: @order_id)
     end
     @cart_ids = CartItem.all.map {|cart_id| cart_id.id}
     PurchaseMailer.creation_email(@cart_ids).deliver_later

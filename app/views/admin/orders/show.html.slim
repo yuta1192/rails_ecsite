@@ -1,0 +1,5 @@
+- @orders.each do |order|
+  br
+  = order.id
+  br
+  = link_to "一部返金またはキャンセル", "https://pay.jp/d/charges/#{order.order_id}"
