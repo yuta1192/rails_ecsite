@@ -12,12 +12,12 @@ class User < ApplicationRecord
     end
   end
 
-  has_many :cart_items
+  has_many :cart_items, dependent: :destroy
   has_many :products, through: :comments
-  has_many :comments
-  has_many :favorites
+  has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   has_many :favorited_products, through: :favorites, source: :product
-  has_many :product_purchases
+  has_many :product_purchases, dependent: :destroy
   def already_favorited?(product)
     self.favorites.exists?(product_id: product.id)
   end

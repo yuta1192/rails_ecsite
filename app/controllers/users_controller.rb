@@ -32,7 +32,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def unsubscribed
+    @user = current_user
+  end
+
   def destroy
+    @user = current_user
+    if @user.destroy
+      flash[:notice] = "退会しました。"
+      redirect_to root_path
+    else
+      flash[:notice] = "失敗しました。"
+      render 'show'
+    end
   end
 
   def favorite

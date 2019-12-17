@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
   end
   resources :users do
+    get :unsubscribed
     member do
       get :favorite
       resources :cart_items do
