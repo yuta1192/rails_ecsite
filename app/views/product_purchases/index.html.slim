@@ -1,0 +1,57 @@
+- provide(:title, "購入履歴")
+
+.row
+  .col-md-12
+    - if current_user.product_purchases.present?
+      - @product_purchases.each do |product_purchase|
+        table.table.table-bordered
+          thead.thead-dark
+            tr
+              th
+                .col-md-2
+                  p 注文日
+                  = product_purchase.created_at.strftime('%Y/%m/%d')
+                .col-md-2
+                  p 合計
+                  = product_purchase.num*product_purchase.product.price
+                  | 円
+                .col-md-2
+                  p お届け先
+                  = product_purchase.user.name
+                .col-md-6
+                  .text-right
+                    p 注文番号 #{product_purchase.id}
+                    = link_to "明細書", user_product_purchase_path(current_user, product_purchase)
+          tbody
+            tr
+              td
+                .col-md-3
+                  = product_purchase.created_at.strftime('%Y/%m/%d')
+                  | に発送済み
+                  .product_purchase
+                    = link_to product_path(product_purchase.product) do
+                      = image_tag product_purchase.product.image.to_s
+                .col-md-3
+                  br
+                    = link_to product_purchase.product.name, product_path(product_purchase.product)
+                  br
+                    = product_purchase.product.price
+                    | 円
+                  br
+                    p 購入個数 #{product_purchase.num} 個
+                .col-md-2
+                  = product_purchase.product.description
+                .col-md-4
+                  今後追加予定
+                  br
+                    .button.btn.btn-primary
+                      p 発送状況
+                  br
+                    .button.btn.btn-primary
+                      p 商品の返品
+                  br
+                    .button.btn.btn-primary
+                      p 商品のレビュー
+
+    - else
+      まだ商品を購入していません。

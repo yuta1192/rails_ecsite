@@ -1,0 +1,50 @@
+商品を検索する
+
+= form_with url:'/admin/products/search', method: 'get', local: true do |f|
+  .form-group
+    = f.label :name, '商品名'
+    = f.text_field :search, class: 'form-control'
+  .form-group
+    = f.label :description, '商品詳細'
+    = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :from, '値段(下限〜上限)'
+    = f.number_field :from,min:10,max:10000, class: 'form-control'
+    |
+      ~
+    |
+    = f.number_field :to,min:10,max:10000, class: 'form-control'
+  .form-group
+    = f.label :kind, '種類'
+    = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, include_blank: "", class: 'form-control'
+  = f.submit '検索する', class: 'btn btn-primary'
+  |
+  = f.submit '名前昇順▲', class: 'btn btn-primary'
+  |
+  = f.submit '詳細昇順▲', class: 'btn btn-primary'
+  |
+  = f.submit '値段昇順▲', class: 'btn btn-primary'
+  |
+  = f.submit '全て昇順▲', class: 'btn btn-primary'
+
+  .container-fluid
+    .row
+      - @products_search.each do |product|
+          .product_box
+            table border="1"
+              tr
+                th.h4 = link_to product.name, product_path(product.id)
+              tr
+                td 値段：#{product.price}円
+              tr
+                td
+                  #image
+                    = image_tag product.image.to_s
+              tr
+                td 種類：#{product.kind}
+              tr
+                td = product.updated_at.strftime('%Y/%m/%d')
+              tr
+                td お気に入り：#{product.favorited_users.count}
+      .mb-3
+        = paginate @products_search

@@ -1,0 +1,86 @@
+- provide(:title, "登録情報")
+
+.row
+  .col-md-12
+    h3 #{@user.name}さんの登録情報
+    .col-md-3
+      h4 会員登録情報
+      p = link_to "会員登録情報", user_path(current_user)
+      p お届け先の変更・追加
+      p クレジットカード情報
+      p = link_to 'お気に入り', favorite_user_path(current_user)
+      br
+      h4 注文履歴
+      p = link_to "発送済み商品", user_product_purchases_path(current_user)
+      p = link_to "発送前商品", cart_items_path(current_user)
+      br
+      h4 買い替え割・買取
+      p お取引管理
+      p 口座情報の登録
+      br
+      h4 外部サイト
+      p 外部サイトとの連携
+      p WEAR IDとの連携
+      br
+      h4 退会
+      p = link_to "退会手続き", user_unsubscribed_path(current_user)
+    .col-md-9
+      table.table.table-bordered
+        thead.thead-dark
+          tr
+            th
+              p 会員登録情報
+        tbody
+          tr
+            td
+              .col-md-3
+                p 基本情報
+              .col-md-7
+                p 男か女か
+                p 生年月日
+                p 住所
+              .col-md-2
+                p = link_to '変更', edit_user_path(current_user)
+        tbody
+          tr
+            td
+              .col-md-3
+                p メールアドレス
+              .col-md-7
+                h4 #{@user.email}
+              .col-md-2
+                p = link_to '変更', edit_user_path(current_user)
+        tbody
+          tr
+            td
+              .col-md-3
+                p パスワード
+              .col-md-7
+                p "********"
+                | ※セキュリティのためパスワードは非表示となってます
+              .col-md-2
+                p = link_to '変更', edit_user_path(current_user)
+
+    .col-md-9
+      table.table.table-bordered
+        thead.thead-dark
+          tr
+            th
+              p お届け先の変更・追加
+        tbody
+          tr
+            td
+              p 追加したお届け先はありません。
+              br
+              p お届け先を追加する
+    .col-md-9
+      table.table.table-bordered
+        thead.thead-dark
+          tr
+            th
+              p クレジットカード情報の変更
+        tbody
+          tr
+            td
+              p クレジットカード登録はありません。
+              | ※ 新規カードの登録は、商品購入時に可能です。

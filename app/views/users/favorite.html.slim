@@ -1,0 +1,26 @@
+- provide(:title, "お気に入り商品")
+
+h3 #{current_user.name} 様のお気に入り
+p お気に入り：#{@counts}件
+
+.row
+  .col-md-12
+    - if @favorites.present?
+      - @favorites_list.each do |favorite|
+          .col-md-3.favorite
+            = link_to product_path(favorite.product.id) do
+              = image_tag favorite.product.image.to_s
+            .col-md-6
+              = link_to favorite.product.name, product_path(favorite.product.id)
+            .col-md-6.text-right
+              p ¥#{favorite.product.price}
+            - if current_user.already_favorited?(favorite.product)
+              .icon = button_to product_favorite_path(favorite.product.id, current_user), method: :delete do
+                i.fas.fa-star.iine
+            - else
+              .icon = button_to product_favorites_path(favorite.product.id) do
+                i.far.fa-star.iine
+
+    - else
+      p お気に入り商品の登録はまだありません。
+      p 気になる商品を見つけよう！

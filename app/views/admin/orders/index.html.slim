@@ -1,0 +1,9 @@
+- @orders.each do |order|
+  p order_id
+  = link_to "order", admin_order_path(order)
+  p 購入者
+  = ProductPurchase.find_by(order_id: order).user.name
+  p メールアドレス
+  = ProductPurchase.find_by(order_id: order).user.email
+  p 購入日
+  = ProductPurchase.find_by(order_id: order).created_at
