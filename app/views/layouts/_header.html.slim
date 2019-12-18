@@ -24,6 +24,7 @@ header.navbar.navbar-fixed-top.navbar-inverse
             = text_field_tag :search
             = submit_tag 'Search', :name => nil
         - else
+          li = link_to '受注、発注予定', admin_orders_path
           li = link_to 'ユーザー管理画面', admin_users_path
           li = link_to '商品管理画面', home_admin_products_path
           li = link_to 'ログアウト', session_path(current_user), method: :delete

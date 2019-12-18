@@ -8,11 +8,15 @@
 
 100.times do |n|
   email = Faker::Internet.email
-  address = "mitaka"
+  address = "yamata90-100-300"
   password = "password"
+  zip_code = 9099900
+  prefectures = "福島県"
   tel = 1111111111
   User.create!(
                name: Faker::Name.first_name,
+               zip_code: zip_code,
+               prefectures: prefectures,
                address: address,
                email: email,
                tel: tel,
@@ -28,9 +32,24 @@ User.create!(
   name: "yuta",
   tel: 1111111111,
   address: "mitaka",
+  zip_code: 1910099,
+  prefectures: "福島県",
   password: "password",
   password_confirmation: "password",
   admin: true
+)
+
+User.create!(
+  id:1999,
+  email: "yuta2222@gmail.com",
+  name: "yuta",
+  tel: 1111111111,
+  address: "mitaka",
+  zip_code: 1910099,
+  prefectures: "福島県",
+  password: "password",
+  password_confirmation: "password",
+  admin: false
 )
 
 200.times do |n|
