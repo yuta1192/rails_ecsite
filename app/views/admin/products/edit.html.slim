@@ -1,0 +1,6 @@
+.nav.justify-content-end
+  = link_to '詳細に戻る', admin_product_path(@product), class: 'nav-link'
+
+h1 商品を編集する
+
+= render partial: 'form', locals: { product: @product }

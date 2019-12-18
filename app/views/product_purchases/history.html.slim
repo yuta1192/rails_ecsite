@@ -1,0 +1,13 @@
+- provide(:title, "購入履歴")
+
+- if current_user.product_purchases.present?
+  - @product_purchases.each do |product_purchase|
+    = product_purchase.id
+    = product_purchase.product.name
+    = product_purchase.product.price
+    = image_tag product_purchase.product.image.to_s
+    = product_purchase.num
+    = product_purchase.created_at
+
+- else
+  まだ商品を購入していません。

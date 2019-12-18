@@ -1,0 +1,106 @@
+- provide(:title, "商品サーチ")
+
+.row
+  .col-md-12
+    .col-md-2
+      div
+        h4 対象商品
+        h3 #{@counts} 件
+      br
+      = form_with url:'/products/search', method: 'get', local: true do |f|
+        .form-group
+          = f.label :name, '商品名'
+          = f.text_field :search, class: 'form-control'
+        .form-group
+          = f.label :kind, '種類'
+          = f.select :kind, Product.all.map{ |product| [product.kind] }.uniq, {include_blank: true}, {class: "form-control"}
+        .form-group
+          = f.label :kind, 'デザイナー'
+          = f.select :designer, Product.all.map{ |product| [product.designer] }.uniq, {include_blank: true}, {class: "form-control"}
+        .form-group
+          = f.label :from, '値段'
+          = f.number_field :from,min:10,max:10000, class: 'form-control', placeholder: "下限：¥10"
+          = f.number_field :to,min:10,max:10000, class: 'form-control', placeholder: "上限：¥10,000"
+        .form-check
+          = f.label :name, 'サイズ'
+          br
+          label.form-check-label
+            = f.radio_button :size, "~XS", name: "size"
+            | ~XS
+        .form-check
+          label.form-check-label
+            = f.radio_button :size, "S", name: "size"
+            | S
+        .form-check
+          label.form-check-label
+            = f.radio_button :size, "M", name: "size"
+            | M
+        .form-check
+          label.form-check-label
+            = f.radio_button :size, "L", name: "size"
+            | L
+        .form-check
+          label.form-check-label
+            = f.radio_button :size, "XL~", name: "size"
+            | XL~
+        br.form-check
+          = f.label :name, "価格タイプ"
+          br
+          label.form-check-label
+            = f.radio_button :sale, "true", name: "sale"
+            | セール価格
+        .form-check
+          label.form-check-label
+            = f.radio_button :sale, "false", name: "sale"
+            | 通常価格
+        br.form-check
+          = f.label :name, "在庫"
+          br
+          label.form-check-label
+            = f.radio_button :valid, "true", name: "valid"
+            | 在庫あり
+        .form-check
+          label.form-check-label
+            = f.radio_button :valid, "false", name: "valid"
+            | 在庫無しも含める
+        br
+        = f.submit '検索', class: 'btn btn-primary btn-block '
+
+
+    .col-md-10
+      br
+      p 検索結果
+      .col-md-12
+        .col-md-3
+          p 商品名 ▲ ▼
+        .col-md-3
+          p 値段 ▲ ▼
+        .col-md-3
+          p おすすめ ▲ ▼
+        .col-md-3
+          p 新着順 ▲ ▼
+      .col-md-12
+      - @product_search.each do |product|
+        .search.col-md-2
+          table
+            tr
+              td
+                #image
+                  = link_to product_path(product) do
+                    = image_tag product.image.to_s
+                  - if logged_in?
+                    - if current_user.already_favorited?(product)
+                      .icon = button_to product_favorite_path(product.id, current_user), method: :delete do
+                        i.fas.fa-star.iine
+                    - else
+                      .icon = button_to product_favorites_path(product.id) do
+                        i.far.fa-star.iine
+          .col-md-6
+            tr
+              td.h4 = link_to product.name, product_path(product.id)
+          .col-md-6.text-right
+            tr
+              td #{product.price}円
+      .row
+        .div
+      = paginate @product_search

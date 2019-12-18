@@ -1,0 +1,27 @@
+ユーザー登録
+= form_for(@user) do |f|
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :email
+  = f.email_field :email
+
+  = f.label :郵便番号
+  = f.number_field :zip_code, :placeholder => "例) 1011100"
+
+  = f.label :都道府県
+  = f.select :prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+
+  = f.label :address
+  = f.text_field :address
+
+  = f.label :tel
+  = f.text_field :tel
+
+  = f.label :password
+  = f.password_field :password
+
+  = f.label :password_confirmation, "Confirmation"
+  = f.password_field :password_confirmation
+
+  = f.submit "Create my account", class: "btn btn-primary"

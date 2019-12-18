@@ -1,0 +1,49 @@
+- provide(:title, "カート")
+
+.row
+  .col-md-12
+    - if @cart_items.present?
+      h3 #{current_user.name}様のショッピングカート
+      .col-md-9
+        br.border-bottom
+          - @carts.where(user_id: current_user.id).order(:id).each do |cart_item|
+            table.table
+              tr
+                td
+                  .col-md-4
+                    = link_to product_path(cart_item) do
+                      = image_tag cart_item.product.image.to_s
+                  .col-md-3
+                    h4 = link_to cart_item.product.name, product_path(cart_item.product.id)
+                    |
+                    = cart_item.product.kind
+                    |
+                    p 残り#{cart_item.product.stock}点
+                    |
+                    = form_for(cart_item, url: cart_item_path(cart_item)) do |f|
+                      = f.label :num, "数量"
+                      = f.select :num, options_for_select((1..20).map{|n|[n]}, selected: cart_item.try(:num))
+                      = f.submit "変更する", class: "btn btn-primary"
+                    br.align-bottom
+                      = link_to "削除", cart_item_path(cart_item), method: :delete
+                  .col-md-3
+                    h5 デザイナーの名前
+                  .col-md-2
+                    h3 #{cart_item.product.price}円
+      .col-md-3
+        p 小計(#{@carts.count}点)： #{@total_price}円
+        = link_to 'レジに進む', confirmation_cart_items_path(current_user), class: "btn btn-danger"
+        p 下には３つほど
+        p 画像付きで
+        p おすすめ商品
+        p 表示できるように
+
+    - else
+      h3 #{current_user.name}様のショッピングカート
+      p カートの中にはまだ何もございません。
+
+- if @cart_items.present?
+  = form_tag(action: :pay, method: :post) do
+    <script type="text/javascript" src="https://checkout.pay.jp" class="payjp-button" data-key="pk_test_0550d800b2ecede01031d30d"></script>
+
+javascript:

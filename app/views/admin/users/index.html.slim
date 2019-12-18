@@ -1,0 +1,42 @@
+- provide(:title, "ユーザ一覧")
+
+- if current_user.admin?
+  .row
+    .col-md-12
+      = link_to 'エクスポート', admin_users_path(format: :csv), class: 'btn btn-primary mb-3'
+  .row
+    .col-md-12
+      .mb-3
+        table.table.table-hover
+          thead.thead-default
+            tr
+              th= User.human_attribute_name(:id)
+              th= User.human_attribute_name(:name)
+              th= User.human_attribute_name(:都道府県)
+              th= User.human_attribute_name(:購入数)
+              th= User.human_attribute_name(:最終ログイン)
+              th= User.human_attribute_name(:詳細、削除)
+          tbody
+            - @users.each do |user|
+              - unless user == current_user
+                tr
+                  td= user.id
+                  td= user.name
+                  td.p 都道府県
+                  td.p 購入数
+                  td.p 最終ログイン
+                  td
+                    = link_to '詳細', admin_user_path(user), class: 'btn btn-primary mr-3'
+                    = link_to '削除', [:admin, user], method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+              - else
+                tr
+                  td= user.id
+                  td= user.name
+                  td
+                  td
+                  td
+                  td
+                    = link_to "編集", edit_admin_user_path(user), class: 'btn btn-primary mr-3'
+
+- else
+  p 開発者しか見れないよ

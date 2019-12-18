@@ -1,0 +1,17 @@
+= form_with model: [:admin, product], local: true do |f|
+  .form-group
+    = f.label :name, '商品名'
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :description, '商品詳細'
+    = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :price, '値段'
+    = f.number_field :price,min:10,max:10000, class: 'form-control'
+  .form-group
+    = f.label :kind, '種類'
+    = f.text_field :kind, class: 'form-control'
+  .form-group
+    = f.label :image, '画像'
+    = f.file_field :image, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary'
