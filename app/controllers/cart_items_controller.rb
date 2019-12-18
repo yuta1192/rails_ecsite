@@ -66,7 +66,7 @@ class CartItemsController < ApplicationController
       @after_stock = cart_item.product.stock - cart_item.num
       cart_item.product.update_attributes(stock: @after_stock)
       cart_item.destroy
-      ProductPurchase.create(user_id: cart_item.user_id, product_id: cart_item.product_id, num: cart_item.num, order_id: @order_id)
+      ProductPurchase.create(user_id: cart_item.user_id, product_id: cart_item.product_id, num: cart_item.num, order_id: @order_id, shipping_zip_code: cart_item.user.zip_code, shipping_prefectures: cart_item.user.prefectures, shipping_address: cart_item.user.address)
     end
     @cart_ids = CartItem.all.map {|cart_id| cart_id.id}
     PurchaseMailer.creation_email(@cart_ids).deliver_later
@@ -76,5 +76,9 @@ class CartItemsController < ApplicationController
 
     def cart_params
       params.require(:cart_item).permit(:product_id, :user_id, :num)
+    end
+
+    def purchase_params
+      params.require(:product_purchase).permit()
     end
 end
