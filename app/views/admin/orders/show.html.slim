@@ -1,22 +1,24 @@
 p 購入者の情報を記載＋宛先の変更
-= @orders.first.user.zip_code
+= @orders.first.shipping_zip_code
 br
-= @orders.first.user.prefectures
+= @orders.first.shipping_prefectures
 br
-= @orders.first.user.address
+= @orders.first.shipping_address
 br
 /p 宛先を変更する
-/= form_for(url: user_product_purchase_path(user_id: @orders.first.user_id, id: @orders.first.id)) do |f|
-/  = f.label :zip_code, "郵便番号"
-/  = f.number_field :zip_code
-/
-/  = f.label :prefectures, "都道府県"
-/  = f.select :prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
-/
-/  = f.label :address
-/  = f.text_field :address
-/
-/  = f.submit "変更する", class: "btn btn-primary"
+= form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: user_product_purchase_path(user_id: @orders.first.user_id, order_id: params[:id]) do |f|
+  = f.label :shipping_zip_code, "郵便番号"
+  = f.number_field :shipping_zip_code
+
+  = f.label :shipping_prefectures, "都道府県"
+  = f.select :shipping_prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+
+  = f.label :shipping_address
+  = f.text_field :shipping_address
+
+  = hidden_field_tag :order_id, @orders.first.order_id
+
+  = f.submit "変更する", class: "btn btn-primary"
 
 - @orders.each do |order|
   br
@@ -28,7 +30,7 @@ br
   br
   = form_for(order, url: admin_order_path(order)) do |f|
     = f.label :num, "数量"
-    = f.select :num, options_for_select((1..order.product.stock).map{|n|[n]}, selected: order.try(:num))
+    = f.select :num, options_for_select((1..(order.product.stock+order.num)).map{|n|[n]}, selected: order.try(:num))
     = f.submit "変更する", class: "btn btn-primary"
 
   br

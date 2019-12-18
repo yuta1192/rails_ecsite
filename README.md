@@ -142,7 +142,7 @@
 - [ ] 受注内容変更
   - キャンセルx
   - 個数を減らすx
-  - 住所を変える
+  - 住所を変えるx
     - ユーザーに住所address1,address2,zip_codeのカラム追加（1は都道府県。セレクトで選択できる。2は自分で打ち込むstring、zip_codeは数値7桁)
     - productpurchaseにshippingaddressを加えることでユーザーの住所自体を変更せずに宛先だけ変更できる。
   - 宅配日時変えるなど
@@ -381,3 +381,12 @@ https://ja.stackoverflow.com/questions/22621/applicationmailer%E3%81%AE%E3%82%A2
 →placeholderだったわ
 
 sort機能を理解しながら作ってみる。
+
+12/18
+
+order_idの取得方法をdescriptionにuser_idを入れ一致した場合@order_idに課金IDを入れてbreakしてループから抜け出す。
+
+form_withの使い方、form全般がよくわかっていないかもしれない。一旦使い方をしっかりと理解してから進もう。
+使用例（https://github.com/rails/rails/blob/7252c2133f6f44085c64b1876cf41902e6a73847/actionview/lib/action_view/helpers/form_helper.rb#L483-L738）
+
+配達の日にち、配達時間の範囲カラムをProductPurchaseとCartItemに追加

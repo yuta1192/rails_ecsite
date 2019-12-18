@@ -28,10 +28,14 @@
                       = link_to "削除", cart_item_path(cart_item), method: :delete
                   .col-md-3
                     h5 デザイナーの名前
+                    = form_with  do |f|
+                      = f.
+                      = f.submit "日程を変更する", class: "btn btn-primary"
                   .col-md-2
                     h3 #{cart_item.product.price}円
       .col-md-3
         p 小計(#{@carts.count}点)： #{@total_price}円
+
         = link_to 'レジに進む', confirmation_cart_items_path(current_user), class: "btn btn-danger"
         p 下には３つほど
         p 画像付きで

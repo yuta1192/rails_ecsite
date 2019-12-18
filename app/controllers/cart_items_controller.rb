@@ -54,6 +54,7 @@ class CartItemsController < ApplicationController
     Payjp.api_key = 'sk_test_215ed6c716c8280b40d237d9'
     charge = Payjp::Charge.create(
     :amount => @total_price,
+    :description => current_user.id,
     :card => params['payjp-token'],
     :currency => 'jpy',
     )
@@ -61,7 +62,12 @@ class CartItemsController < ApplicationController
     @cart_items.each do |cart_item|
       "transaction処理（購入したものを無効にする）を実装" unless cart_item.product.stock >= cart_item.num
     end
-    @order_id = Payjp::Charge.all.first.id
+    Payjp::Charge.all.each do |order_id|
+      if order_id.description.to_i == current_user.id
+        @order_id = order_id.id
+        break
+      end
+    end
     @cart_items.each do |cart_item|
       @after_stock = cart_item.product.stock - cart_item.num
       cart_item.product.update_attributes(stock: @after_stock)
