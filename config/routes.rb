@@ -25,7 +25,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :product_purchases, only: [:index, :show]
+    resources :product_purchases, only: [:index, :show, :update]
   end
   resources :sessions
   resources :password_resets, only: [:new, :create, :edit, :update]
