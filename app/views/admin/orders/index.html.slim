@@ -1,9 +1,13 @@
-- @orders.each do |order|
-  p order_id
-  = link_to "order", admin_order_path(order)
-  p 購入者
-  = ProductPurchase.find_by(order_id: order).user.name
-  p メールアドレス
-  = ProductPurchase.find_by(order_id: order).user.email
-  p 購入日
-  = ProductPurchase.find_by(order_id: order).created_at
+= form_with url: finish_flag_admin_orders_path do |f|
+  - @orders.each do |order|
+    = f.check_box :finish_flag
+    p order_id
+    = link_to "order", admin_order_path(order)
+    p 購入者
+    = ProductPurchase.find_by(order_id: order).user.name
+    p メールアドレス
+    = ProductPurchase.find_by(order_id: order).user.email
+    p 購入日
+    = ProductPurchase.find_by(order_id: order).created_at
+    br
+  = f.submit "作業完了"

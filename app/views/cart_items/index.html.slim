@@ -4,6 +4,14 @@
   .col-md-12
     - if @cart_items.present?
       h3 #{current_user.name}様のショッピングカート
+      = form_with model: @cart_items.first do |f|
+        = f.label :配送時間帯
+        = f.date_field :delivery_date
+
+        = f.label :配送時間帯
+        = f.select :delivery_zone, CartItem.delivery_zones.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+        = f.submit "確定", class: "btn btn-primary"
+
       .col-md-9
         br.border-bottom
           - @carts.where(user_id: current_user.id).order(:id).each do |cart_item|
@@ -28,9 +36,6 @@
                       = link_to "削除", cart_item_path(cart_item), method: :delete
                   .col-md-3
                     h5 デザイナーの名前
-                    = form_with  do |f|
-                      = f.
-                      = f.submit "日程を変更する", class: "btn btn-primary"
                   .col-md-2
                     h3 #{cart_item.product.price}円
       .col-md-3

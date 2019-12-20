@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_072112) do
+ActiveRecord::Schema.define(version: 2019_12_19_083702) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -55,11 +55,12 @@ ActiveRecord::Schema.define(version: 2019_12_18_072112) do
     t.string "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "shipping_zip_code"
+    t.string "shipping_zip_code"
     t.string "shipping_prefectures"
     t.string "shipping_address"
     t.date "delivery_date"
     t.integer "delivery_zone"
+    t.boolean "finish_flag", default: false, null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -94,7 +95,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_072112) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.integer "prefectures"
-    t.integer "zip_code"
+    t.string "zip_code"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

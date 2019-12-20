@@ -30,7 +30,13 @@ Rails.application.routes.draw do
   resources :sessions
   resources :password_resets, only: [:new, :create, :edit, :update]
   namespace :admin do
-    resources :orders
+    resources :orders do
+      get :deliverynote
+      patch :delivery_update
+      collection do
+        patch :finish_flag
+      end
+    end
     resources :users
     resources :products do
       collection do
