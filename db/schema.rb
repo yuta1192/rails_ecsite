@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_094413) do
+ActiveRecord::Schema.define(version: 2019_12_20_031834) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2019_12_17_094413) do
     t.integer "num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "delivery_date"
+    t.integer "delivery_zone"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -46,6 +48,15 @@ ActiveRecord::Schema.define(version: 2019_12_17_094413) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_purchase_shipments", force: :cascade do |t|
+    t.integer "product_purchase_id"
+    t.integer "shipment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_purchase_id"], name: "index_product_purchase_shipments_on_product_purchase_id"
+    t.index ["shipment_id"], name: "index_product_purchase_shipments_on_shipment_id"
+  end
+
   create_table "product_purchases", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
@@ -53,9 +64,12 @@ ActiveRecord::Schema.define(version: 2019_12_17_094413) do
     t.string "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "shipping_zip_code"
+    t.string "shipping_zip_code"
     t.string "shipping_prefectures"
     t.string "shipping_address"
+    t.date "delivery_date"
+    t.integer "delivery_zone"
+    t.boolean "finish_flag", default: false, null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -77,6 +91,11 @@ ActiveRecord::Schema.define(version: 2019_12_17_094413) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shipments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -90,7 +109,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_094413) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.integer "prefectures"
-    t.integer "zip_code"
+    t.string "zip_code"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

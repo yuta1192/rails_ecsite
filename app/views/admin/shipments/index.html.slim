@@ -1,3 +1,5 @@
+p 出荷一覧表
+
 = form_with url: admin_orders_path, method: 'get', local: true do |f|
   .form-group
     = f.label :order_id, '注文番号'
@@ -13,12 +15,3 @@
     = ProductPurchase.find_by(order_id: order.order_id).user.email
     p 購入日
     = ProductPurchase.find_by(order_id: order.order_id).created_at
-
-br
-= link_to 'エクスポート', admin_orders_path(format: :csv), class: 'btn btn-primary mb-3'
-br
-= form_tag import_admin_orders_path, multipart: true do
-  = file_field_tag :file
-  = submit_tag "インポート"
-
-= link_to "link", admin_shipments_path
