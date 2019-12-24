@@ -51,3 +51,7 @@ br
 
 
 = link_to "納品書の発行", admin_order_deliverynote_path(@orders.first.order_id)
+
+= form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finish_flag_path(order_id: params[:id]) do |f|
+  = f.check_box :finish_flag, {}, "true", "false"
+  = f.submit "作業完了"

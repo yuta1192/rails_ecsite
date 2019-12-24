@@ -1,6 +1,17 @@
 class Admin::OrdersController < ApplicationController
   def index
     @orders = ProductPurchase.all.pluck(:order_id).uniq.compact
+    @product_purchases_search = ProductPurchase.where(finish_flag: false).search(params[:order_id]).uniq(&:order_id)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @product_purchases.generate_csv, filename: "orders-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
+    end
+  end
+
+  def import
+    ProductPurchase.import(params[:file])
+    redirect_to admin_orders_path
   end
 
   def show
@@ -59,13 +70,14 @@ class Admin::OrdersController < ApplicationController
   end
 
   def finish_flag
-    byebug
-    @orders = params[:order_id]
-    @orders.each do |order|
-      return ProductPurchase.where(order_id: order).update(finish_flag: true) if params.dig(:product_purchase, :finish_flag) == "1"
+    if params.dig(:product_purchase, :finish_flag) == "true"
+      ProductPurchase.where(order_id: params[:order_id]).update(finish_flag: true)
+      flash[:notice] = "選択した受注を終了しました。"
+      redirect_to admin_orders_path
+    else
+      flash[:notice] = "エラー"
+      redirect_to admin_orders_path
     end
-    flash[:notice] = "選択した受注を終了しました。"
-    redirect_to admin_orders_path
   end
 
     private

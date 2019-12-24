@@ -33,10 +33,10 @@ Rails.application.routes.draw do
     resources :orders do
       get :deliverynote
       patch :delivery_update
-      collection do
-        patch :finish_flag
-      end
+      patch :finish_flag
+      collection { post :import }
     end
+    resources :shipments
     resources :users
     resources :products do
       collection do
