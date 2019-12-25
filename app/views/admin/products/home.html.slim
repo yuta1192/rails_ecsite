@@ -1,14 +1,12 @@
 - provide(:title, "商品情報")
 
 - if current_user.admin?
-  table.table.table-hover
-    tbody
-      tr
-        th 商品一覧
-        td= link_to '商品一覧', admin_products_path, class: 'btn btn-primary mr-3'
-      tr
-        th 商品追加
-        td= link_to '商品追加', new_admin_product_path, class: 'btn btn-primary mr-3'
-      tr
-        th 商品検索
-        td= link_to '商品検索', search_admin_products_path, class: 'btn btn-primary mr-3'
+
+.row
+  .col-md-12
+    p ◯商品一覧
+    = link_to '商品一覧', admin_products_path, class: 'btn btn-primary form-control'
+    p ◯商品追加
+    = link_to '商品追加', new_admin_product_path, class: 'btn btn-primary form-control'
+    p ◯商品検索
+    = link_to '商品検索', search_admin_products_path, class: 'btn btn-primary form-control'

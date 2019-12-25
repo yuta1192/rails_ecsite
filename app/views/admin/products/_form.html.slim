@@ -12,6 +12,18 @@
     = f.label :kind, '種類'
     = f.text_field :kind, class: 'form-control'
   .form-group
+    = f.label :size, 'サイズ'
+    = f.text_field :size, class: 'form-control'
+  .form-group
+    = f.label :designer, 'デザイナー'
+    = f.text_field :designer, class: 'form-control'
+  .form-group
+    = f.label :stock, '在庫数'
+    = f.number_field :stock, class: 'form-control'
+  .form-group
+    = f.label :sale, 'セール品'
+    = f.text_field :sale, class: 'form-control'
+  .form-group
     = f.label :image, '画像'
     = f.file_field :image, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary'

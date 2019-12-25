@@ -1,0 +1,10 @@
+- provide(:title, "受注出荷管理")
+
+- if current_user.admin?
+
+.row
+  .col-md-12
+    p ◯受注管理
+    = link_to '受注管理', admin_orders_path, class: 'btn btn-primary form-control'
+    p ◯出荷管理
+    = link_to '出荷管理', admin_shipments_path, class: 'btn btn-primary form-control'

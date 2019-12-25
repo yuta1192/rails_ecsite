@@ -12,7 +12,7 @@ class Admin::ProductsController < ApplicationController
     elsif params[:commit] == "値段昇順▲"
       @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).order(price: :asc).select_kind(params[:kind]).page(params[:page])
     else
-      @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page])
+      @products_search = Product.search(params[:search]).description(params[:description]).price_zone(params[:from],params[:to]).select_kind(params[:kind]).page(params[:page]).per(24).order(sort_column + ' ' + sort_direction)
     end
     if params[:from].present? && params[:to].present?
       if params[:from] > params[:to]
@@ -24,7 +24,7 @@ class Admin::ProductsController < ApplicationController
   def index
     @products = Product.search(params[:search]).page(params[:page]).per(15)
     #@product_search = Product.search(params[:search]).order('name').page(params[:page]).per(50)
-    @product_search = Product.search(params[:search]).page(params[:page]).per(50).order(sort_column + ' ' + sort_direction)
+    @product_search = Product.search(params[:search]).page(params[:page]).per(48).order(sort_column + ' ' + sort_direction)
   end
 
   def new
@@ -78,6 +78,6 @@ class Admin::ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :kind, :image)
+    params.require(:product).permit(:name, :description, :price, :kind, :image, :stock, :designer, :sale, :size)
   end
 end

@@ -1,4 +1,8 @@
-商品追加
+- provide(:title, "商品の追加")
+
+- if current_user.admin?
+  .row
+    .col-md-12
 
 .nav.justify-content-end
   = link_to 'ホームに戻る', home_admin_products_path, class: 'nav-link'

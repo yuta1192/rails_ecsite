@@ -36,7 +36,11 @@ Rails.application.routes.draw do
       patch :finish_flag
       collection { post :import }
     end
-    resources :shipments
+    resources :shipments do
+      collection do
+        get :home
+      end
+    end
     resources :users
     resources :products do
       collection do

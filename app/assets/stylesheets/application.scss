@@ -485,135 +485,22 @@ img {
   appearance: none;
   }
 
-/* カレンダーcss */
+/* admin_product_index */
 
-div.cal_wrapper {
-    padding: 10px 0px;
-}
-div.schedule_wrapper {
-    padding: 10px 0px;
-    width: 310px;
-    border: solid 1px #CCC;
-    border-radius: 5px;
-    box-shadow: 1px 1px 3px #666;
-}
-div.schedule_wrapper h3 {
-    padding: 0px 10px;
-    font-weight: normal;
-    margin: 0px;
-    font-size: 12px;
-    color: #666;
-}
-div.schedule_wrapper div.schedule_list {
-    padding: 0px 10px;
-    margin: 0px;
+.admin_product_index {
+  display: inline;
+img {
+  height: 150px;
+  width: 125px;
+  }
 }
 
-div.cal_wrapper table.cal tr th p {
-    float: left;
-    padding: 5px;
-    margin: 0px;
-    color: #666;
-    font-size: 12px;
-}
-div.cal_wrapper table.cal tr th div.cal_ui {
-    float: right;
-}
+/* admin_product_search */
 
-div.cal_wrapper table.cal tr th div.cal_ui input {
-    border: solid 1px #CCC;
-    background-color: #FFF;
-    font-size: 12px;
-    margin: 0px 1px;
-    padding: 1px 3px;
-    border-radius: 2px;
-}
-div.cal_wrapper table.cal td {;
-    border: solid 1px #000;
-}
-table{
-  border-collapse: collapse;
-}
-div.cal_wrapper table.cal tr td {
-    font-size: 10px;
-    text-align: center;
-    padding: 2px
-}
-div.cal_wrapper table.cal tr.headline td {
-    padding: 5px 0px;
-}
-div.cal_wrapper table.cal tr.headline {
-    background-color: #EEE;
-}
-/*カレンダー表組の装飾*/
-div.cal_wrapper table.cal tr td div {
-    position: relative;
-    padding: 5px 9px;/*日付の幅*/
-    font-size: 10px;
-    text-align: center;
-    background-color: #FFF;
-    border-radius: 3px;
-}
-div.cal_wrapper table.cal tr td div span {
-    display: none;
-    position: absolute;
-    top: 20px;
-    left: 0px;
-    width: 180px;
-    border: solid 1px #EEE;
-    background-color: #FFF;
-    text-align: left;
-    padding: 5px;
-    z-index: 10;
-    color: #000;
-    font-weight: normal;
-    line-height: 1.5em;
-    box-shadow: 1px 1px 3px #666;
-}
-
-/* Holydayの装飾 */
-div.cal_wrapper table.cal tr td div.Holyday {
-    font-weight: bolder;
-    color: red;/*祝日の文字色。赤色にしてます。*/
-    background-color: #FFFACD;/*祝日の背景色。黄色にしてます。*/
-}
-
-div.cal_wrapper table.cal tr td div.Holyday, div.cal_wrapper table.cal tr td div.Sun, div.cal_wrapper table.cal tr td div.Sat {
-    background-color: #FFFACD;/*日曜日・土曜日の背景色。黄色にしてます。*/
-}
-
-
-div.cal_wrapper table.cal tr td div.Today {
-  color: #66ccff;/*当日の文字色。見本では水色にしてます。*/
-    font-weight: bolder;
-}
-
-/*過去日付の装飾*/
-div.cal_wrapper table.cal tr td div.backward {
-    color: #CCC;
-    font-weight: normal;
-    background-color: #FFF;
-    border-radius: 3px;
-}
-
-.sat {
-  color: blue;
-  background: #D0E8FF;/*「土曜日」見出し部分の背景色。水色にしてます。*/
-  font-weight: bold;
-}
-
-.sun {
-  color: red;
-  background-color: #FDDFFC;/*「日曜日」見出し部分の背景色。ピンク色にしてます。*/
-  font-weight: bold;
-}
-
-.Sun {
-  color: red;/*日曜日の文字色。見本では赤色にしてます。*/
-  font-weight: bold;
-}
-
-.Sat {
-  color: blue;/*土曜日の文字色。見本では赤色にしてます。*/
-  font-weight: bold;
+.admin_product_search {
+  display: inline;
+img {
+  height: 150px;
+  width: 125px;
+  }
 }
