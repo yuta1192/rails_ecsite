@@ -22,8 +22,8 @@
                 tr
                   td= user.id
                   td= user.name
-                  td.p 都道府県
-                  td.p 購入数
+                  td= user.prefectures
+                  td= user.product_purchases.size
                   td.p 最終ログイン
                   td
                     = link_to '詳細', admin_user_path(user), class: 'btn btn-primary mr-3'

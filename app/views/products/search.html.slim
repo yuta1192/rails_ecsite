@@ -71,14 +71,22 @@
       br
       p 検索結果
       .col-md-12
-        .col-md-3
-          p 商品名 ▲ ▼
-        .col-md-3
-          p 値段 ▲ ▼
-        .col-md-3
-          p おすすめ ▲ ▼
-        .col-md-3
-          p 新着順 ▲ ▼
+        .col-md-3.col-xs-3
+          | 商品名
+          = sort_asc "name"
+          = sort_desc "name"
+        .col-md-3.col-xs-3
+          | 値段
+          = sort_asc "price"
+          = sort_desc "price"
+        .col-md-3.col-xs-3
+          | 作成日
+          = sort_asc "created_at"
+          = sort_desc "created_at"
+        .col-md-3.col-xs-3
+          | 更新日
+          = sort_asc "updated_at"
+          = sort_desc "updated_at"
       .col-md-12
       - @product_search.each do |product|
         .search.col-md-2

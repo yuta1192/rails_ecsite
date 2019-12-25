@@ -53,19 +53,24 @@ User.create!(
 )
 
 200.times do |n|
-  price = n
+  price = n*100
   description = "password"
   kinds = ["帽子","ズボン","シャツ","パンツ","T-シャツ","ワイシャツ","ポロシャツ","小物","靴","メガネ","カバン","上着"]
   kind = kinds.sample
   images = open("#{Rails.root}/db/fixtures/maikeru.jpg"),open("#{Rails.root}/db/fixtures/samune15.jpg"),open("#{Rails.root}/db/fixtures/shopping.jpeg")
   image = images.sample
-  stock = 10
+  stock = 30
+  sizes = ["~XS","S","M","L","XL~"]
+  size = sizes.sample
   Product.create!(
-               name: Faker::Name.first_name,
+               name: Faker::Games::Pokemon.name,
                price: price,
-               description: description,
+               description: Faker::Lorem.sentence + Faker::Lorem.sentence + Faker::Lorem.sentence + Faker::Lorem.sentence,
                kind: kind,
                image: image,
-               stock: stock
+               stock: stock,
+               designer: Faker::Games::SuperSmashBros.fighter,
+               sale: false,
+               size: size
                )
 end

@@ -1,24 +1,44 @@
-= form_with url: admin_orders_path, method: 'get', local: true do |f|
-  .form-group
-    = f.label :order_id, '注文番号'
-    = f.text_field :order_id, class: 'form-control'
-  = f.submit '検索する', class: 'btn btn-primary'
+- provide(:title, "受注一覧")
 
-  - @product_purchases_search.each do |order|
+.row
+  .col-md-12
+    br.p 注文番号
+    = form_with url: admin_orders_path, method: 'get', local: true do |f|
+      .input-group
+        = f.text_field :order_id, class: 'form-control'
+        span.input-group-btn
+          = f.submit '検索する', class: 'btn btn-primary'
+
+  .col-md-12
     br
-    = link_to order.order_id, admin_order_path(order.order_id)
-    p 購入者
-    = ProductPurchase.find_by(order_id: order.order_id).user.name
-    p メールアドレス
-    = ProductPurchase.find_by(order_id: order.order_id).user.email
-    p 購入日
-    = ProductPurchase.find_by(order_id: order.order_id).created_at
+    - @product_purchases_search.each_with_index do |order, i|
+      table.table.table-bordered
+        thead
+          tr
+            th 番号
+            th 注文番号
+            th ユーザーID
+            th 宅配住所
+            th 配達日
+            th 配達時間帯
+            th 購入日
+        tbody
+          tr
+            th = i
+            td = link_to order.order_id, admin_order_path(order.order_id)
+            td = ProductPurchase.find_by(order_id: order.order_id).user_id
+            td #{ProductPurchase.find_by(order_id: order.order_id).shipping_zip_code + ProductPurchase.find_by(order_id: order.order_id).shipping_prefectures + ProductPurchase.find_by(order_id: order.order_id).shipping_address}
+            td = ProductPurchase.find_by(order_id: order.order_id).delivery_date.strftime('%Y/%m/%d')
+            td = ProductPurchase.find_by(order_id: order.order_id).delivery_zone
+            td = ProductPurchase.find_by(order_id: order.order_id).created_at.strftime('%Y/%m/%d')
 
-br
-= link_to 'エクスポート', admin_orders_path(format: :csv), class: 'btn btn-primary mb-3'
-br
-= form_tag import_admin_orders_path, multipart: true do
-  = file_field_tag :file
-  = submit_tag "インポート"
-
-= link_to "link", admin_shipments_path
+  .col-md-12
+    br
+    .col-md-7.col-xs-5
+      = link_to 'エクスポート', admin_orders_path(format: :csv), class: 'btn btn-primary mb-3'
+    .col-md-5.col-xs-7
+      = form_tag import_admin_orders_path, multipart: true do
+        .input-group
+          = file_field_tag :file
+          span.input-group-btn
+          = submit_tag "インポート", class: 'btn btn-primary mb-3'

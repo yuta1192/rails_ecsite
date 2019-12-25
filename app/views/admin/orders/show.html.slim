@@ -1,57 +1,64 @@
-p 購入者の情報を記載＋宛先の変更
-= @orders.first.shipping_zip_code
-br
-= @orders.first.shipping_prefectures
-br
-= @orders.first.shipping_address
-br
+- provide(:title, "注文番号：#{@orders.first.order_id}")
 
-/ 宛先を変更する
-= form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: user_product_purchase_path(user_id: @orders.first.user_id, order_id: params[:id]) do |f|
-  = f.label :shipping_zip_code, "郵便番号"
-  = f.number_field :shipping_zip_code
+.row
+  .col-md-12
+    p.h2 注文番号：#{@orders.first.order_id}
+    br
+    p 宛先を変更する。
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: user_product_purchase_path(user_id: @orders.first.user_id, order_id: params[:id]) do |f|
+      = f.label :shipping_zip_code, "郵便番号", class: "control-label"
+      = f.number_field :shipping_zip_code, class: "form-control"
 
-  = f.label :shipping_prefectures, "都道府県"
-  = f.select :shipping_prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+      = f.label :shipping_prefectures, "都道府県", class: "control-label"
+      = f.select :shipping_prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'btn btn-info form-control'
 
-  = f.label :shipping_address
-  = f.text_field :shipping_address
+      = f.label :shipping_address, "住所", class: "control-label"
+      = f.text_field :shipping_address, class: "form-control"
 
-  = hidden_field_tag :order_id, @orders.first.order_id
+      = hidden_field_tag :order_id, @orders.first.order_id
 
-  = f.submit "変更する", class: "btn btn-primary"
+      = f.submit "変更する", class: "btn btn-primary right-block"
 
-/ 配達時間を変更する
-= form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_delivery_update_path(order_id: params[:id]) do |f|
-  = f.label :配送時間帯
-  = f.date_field :delivery_date
+    br
+    p 配達日時を変更する。
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_delivery_update_path(order_id: params[:id]) do |f|
+      = f.label :delivery_date, "配達日", class: "control-label"
+      = f.date_field :delivery_date, class: "form-control"
 
-  = f.label :配送時間帯
-  = f.select :delivery_zone, CartItem.delivery_zones.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+      = f.label :delivery_zone, "配送時間帯", class: "control-label"
+      = f.select :delivery_zone, CartItem.delivery_zones.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
 
-  = f.submit "確定", class: "btn btn-primary"
+      = f.submit "変更する", class: "btn btn-primary"
 
-- @orders.each do |order|
-  br
-  = order.id
-  br
-  = order.product.name
-  br
-  = order.num
-  br
-  = form_for(order, url: admin_order_path(order)) do |f|
-    = f.label :num, "数量"
-    = f.select :num, options_for_select((1..(order.product.stock+order.num)).map{|n|[n]}, selected: order.try(:num))
-    = f.submit "変更する", class: "btn btn-primary"
+    br
+    - @orders.each do |order|
+      table.table.table-bordered
+        thead
+          tr
+            th.col-md-2 番号
+            th.col-md-3 商品名
+            th.col-md-2 購入数
+            th.col-md-2 値段
+            th.col-md-3
+        tbody
+          tr
+            th = order.id
+            td = order.product.name
+            td = order.num
+            td.p ¥ #{order.product.price}
+            td = form_for(order, url: admin_order_path(order)) do |f|
+              = f.label :num, "数量"
+              = f.select :num, options_for_select((1..(order.product.stock+order.num)).map{|n|[n]}, selected: order.try(:num))
+              = f.submit "変更する", class: "btn btn-primary"
 
-  br
-  p ¥ #{order.product.price}
-  = link_to "一部返金またはキャンセル", "https://pay.jp/d/charges/#{order.order_id}"
-  p _____________________
+    br
+      .col-md-12
+        = link_to "一部返金またはキャンセル", "https://pay.jp/d/charges/#{@orders.first.order_id}", class: 'btn btn-warning col-md-3'
+        .col-md-6
+        = link_to "納品書の発行", admin_order_deliverynote_path(@orders.first.order_id), class: 'btn btn-info col-md-3'
 
-
-= link_to "納品書の発行", admin_order_deliverynote_path(@orders.first.order_id)
-
-= form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finish_flag_path(order_id: params[:id]) do |f|
-  = f.check_box :finish_flag, {}, "true", "false"
-  = f.submit "作業完了"
+    br
+    br
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finish_flag_path(order_id: params[:id]) do |f|
+      = f.check_box :finish_flag, {}, "true", "false"
+      = f.submit "作業完了", class: "btn btn-primary"
