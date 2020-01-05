@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     end
   end
   resources :users do
+    get :information
+    patch :information_update
+    get :email
+    patch :email_update
+    get :password
+    patch :password_update
     get :unsubscribed
     member do
       get :favorite

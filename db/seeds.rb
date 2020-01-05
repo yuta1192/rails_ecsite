@@ -13,6 +13,7 @@
   zip_code = 9099900
   prefectures = "福島県"
   tel = 1111111111
+  sexes = [0,1].sample
   User.create!(
                name: Faker::Name.first_name,
                zip_code: zip_code,
@@ -21,7 +22,8 @@
                email: email,
                tel: tel,
                password: password,
-               password_confirmation: password
+               password_confirmation: password,
+               sex: sexes
                )
 end
 
@@ -36,7 +38,8 @@ User.create!(
   prefectures: "福島県",
   password: "password",
   password_confirmation: "password",
-  admin: true
+  admin: true,
+  sex: 0
 )
 
 User.create!(
@@ -49,7 +52,8 @@ User.create!(
   prefectures: "福島県",
   password: "password",
   password_confirmation: "password",
-  admin: false
+  admin: false,
+  sex: 1
 )
 
 200.times do |n|

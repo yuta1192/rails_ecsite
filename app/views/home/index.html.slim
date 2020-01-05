@@ -29,27 +29,21 @@
               |
               = @products.where(designer: designer).count
 
-    .panel.panel-primary
+    .panel.panel-primary.recommendation_products
       .panel-heading
         h2.panel-title
           | あなたにおすすめ
       .list-group
+      - if current_user.present? && current_user.favorites.present?
+        - @relation_products.each do |f|
+          .list-group-item
+            |
+            = link_to product_path(f)
+              = image_tag f.image.to_s
+            = f.name
+      - else
         a.list-group-item[href="#"]
-          | りんご
-          span.badge
-            | 5
-        a.list-group-item[href="#"]
-          | みかん
-          span.badge
-            | 3
-        a.list-group-item[href="#"]
-          | いちご
-          span.badge
-            | 3
-        a.list-group-item[href="#"]
-          | めろん
-          span.badge
-            | 3
+          | お気に入りをしてください。
 
   /中央
 
@@ -172,19 +166,3 @@
       li
         a[href="#"]
           | サーバー３
-
-
-button.btn.btn-primary data-target="#exampleModal" data-toggle="modal" type="button"
-  | Launch demo modal
-#exampleModal.modal.fade aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1"
-  .modal-dialog role="document"
-    .modal-content
-      .modal-header
-        h5#exampleModalLabel.modal-title Modal title
-        button.close aria-label="Close" data-dismiss="modal" type="button"
-          span aria-hidden="true"  ×
-      .modal-body
-        | \...
-      .modal-footer
-        button.btn.btn-secondary data-dismiss="modal" type="button"  Close
-        button.btn.btn-primary type="button"  Save changes

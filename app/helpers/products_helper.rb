@@ -14,6 +14,6 @@ module ProductsHelper
 
   def sort_column
       # If params[:column] is nil, set sort_column to "occurred_date" by default
-      Product.column_names.include?(params[:column]) ? params[:column] : "product_name"
+      Product.column_names.include?(params[:column]) ? params[:column] : "name"
   end
 end

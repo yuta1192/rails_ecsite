@@ -1,0 +1,25 @@
+ユーザー編集
+
+= form_with model: @user, url: user_information_update_path(@user) do |f|
+  = f.label :name, :名前
+  = f.text_field :name
+  br
+  = f.label :sex, :性別
+  = f.text_field :sex
+  br
+  = f.label :birthday, :生年月日
+  = f.text_field :birthday
+  br
+  = f.label :zip_code, :郵便番号
+  = f.number_field :zip_code, :placeholder => "例) 1011100"
+  br
+  = f.label :prefectures, :都道府県
+  = f.select :prefectures, User.prefectures.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
+  br
+  = f.label :address, :住所
+  = f.text_field :address
+  br
+  = f.label :tel, :電話番号
+  = f.text_field :tel
+  br
+  = f.submit "update my account", class: "btn btn-primary"

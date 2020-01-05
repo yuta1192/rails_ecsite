@@ -36,6 +36,48 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def information
+    @user = current_user
+  end
+
+  def information_update
+    @user = User.find(params[:user_id])
+    if @user.update_attributes(information_params)
+      flash[:success] = "update"
+      redirect_to @user
+    else
+      render 'information'
+    end
+  end
+
+  def email
+    @user = current_user
+  end
+
+  def email_update
+    @user = User.find(params[:user_id])
+    if @user.update_attributes(email_params)
+      flash[:success] = "update"
+      redirect_to @user
+    else
+      render 'email'
+    end
+  end
+
+  def password
+    @user = current_user
+  end
+
+  def password_update
+    @user = User.find(params[:user_id])
+    if @user.update_attributes(password_params)
+      flash[:success] = "update"
+      redirect_to @user
+    else
+      render 'password'
+    end
+  end
+
   def destroy
     @user = current_user
     if @user.destroy
@@ -61,6 +103,19 @@ class UsersController < ApplicationController
     private
 
     def user_params
-      params.require(:user).permit(:name, :email, :address, :tel, :password, :password_confirmation, :prefectures, :zip_code)
+      params.require(:user).permit(:name, :sex, :birthday, :email, :address, :tel, :password, :password_confirmation, :prefectures, :zip_code)
     end
+
+    def information_params
+      params.require(:user).permit(:name, :sex, :birthday, :zip_code, :prefectures, :address, :tel)
+    end
+
+    def email_params
+      params.require(:user).permit(:email)
+    end
+
+    def password_params
+      params.require(:user).permit(:password, :password_confirmation)
+    end
+
 end

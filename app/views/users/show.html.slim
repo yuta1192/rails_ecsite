@@ -36,11 +36,12 @@
               .col-md-3
                 p 基本情報
               .col-md-7
-                p 男か女か
-                p 生年月日
-                p 住所
+                p = current_user.sex
+                p = current_user.birthday.strftime('%Y年%m月%d日')
+                p 〒#{current_user.zip_code}
+                p = current_user.prefectures + current_user.address
               .col-md-2
-                p = link_to '変更', edit_user_path(current_user)
+                p = link_to '変更', user_information_path(current_user)
         tbody
           tr
             td
@@ -49,7 +50,7 @@
               .col-md-7
                 h4 #{@user.email}
               .col-md-2
-                p = link_to '変更', edit_user_path(current_user)
+                p = link_to '変更', user_email_path(current_user)
         tbody
           tr
             td
@@ -59,7 +60,7 @@
                 p "********"
                 | ※セキュリティのためパスワードは非表示となってます
               .col-md-2
-                p = link_to '変更', edit_user_path(current_user)
+                p = link_to '変更', user_password_path(current_user)
 
     .col-md-9
       table.table.table-bordered

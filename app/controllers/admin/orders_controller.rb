@@ -72,7 +72,11 @@ class Admin::OrdersController < ApplicationController
   def finish_flag
     if params.dig(:product_purchase, :finish_flag) == "true"
       ProductPurchase.where(order_id: params[:order_id]).update(finish_flag: true)
-      flash[:notice] = "選択した受注を終了しました。"
+      flash[:notice] = "選択した受注を完了しました。"
+      redirect_to admin_orders_path
+    elsif params.dig(:product_purchase, :finish_flag) == "false"
+      ProductPurchase.where(order_id: params[:order_id]).update(finish_flag: false)
+      flash[:notice] = "選択した受注を未着手しました。"
       redirect_to admin_orders_path
     else
       flash[:notice] = "エラー"

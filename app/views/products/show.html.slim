@@ -3,7 +3,7 @@
 .row
   .col-md-12
     br
-    .col-md-6.product
+    .col-md-7.product
       = image_tag @product.image.to_s
       - if logged_in?
         - if current_user.already_favorited?(@product)
@@ -12,19 +12,18 @@
         - else
           .icon = button_to product_favorites_path(@product.id) do
             i.far.fa-star.iine
-    .col-md-6
-      h3 = @product.name
-      h4 ¥#{@product.price}
-      p 商品詳細
+    .col-md-5.product_show
+      h1.text-left = @product.name
+      h2.text-left ¥#{@product.price}
+      p.lead 商品詳細
+      |
       = @product.description
-      p 種類
-      = @product.kind
-      p サイズ
-      p XS S M L XL
-      p デザイナー
-      p ファッション竹村
-      p 在庫数
-      = @product.stock
+      br
+      br
+      p.lead 種類：#{@product.kind}
+      p.lead サイズ：#{@product.size}
+      p.lead デザイナー：#{@product.designer}
+      p.lead 在庫数：#{@product.stock}
       .div
       - if logged_in?
         - if @product.stock > 0
@@ -68,7 +67,8 @@
         h3.text-center 関連商品
       br
         - @relation_products.each do |w|
-          .col-md-4
+          .product_show_relations.col-md-2.col-xs-4
+            p ¥#{w.price}
             = link_to product_path(w)
               = image_tag w.image.to_s
-            = link_to w.name, product_path(w)
+            .text-center = link_to w.name, product_path(w)
