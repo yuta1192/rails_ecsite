@@ -43,9 +43,13 @@ Rails.application.routes.draw do
       collection { post :import }
     end
     resources :shipments do
+      member do
+        get :total_picking_products
+      end
       collection do
         get :home
         get :total_picking_list
+        post :total_picking_list
         patch :status
         post :import
       end

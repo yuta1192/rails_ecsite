@@ -52,10 +52,6 @@ class ProductPurchase < ApplicationRecord
     ProductPurchase.where(['order_id LIKE ?', "%#{order_id}%"])
   end
 
-  scope :total_product_purchase_num, -> {
-
-  }
-
   enum status: {
     出荷可能:0,着手:1,出荷済:2
   }

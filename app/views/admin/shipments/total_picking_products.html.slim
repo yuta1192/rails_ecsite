@@ -1,0 +1,45 @@
+.row
+  .col-md-12
+    br
+    .col-md-7.product
+      = image_tag @product.image.to_s
+    .col-md-5.product_show
+      h1.text-left = @product.name
+      h2.text-left ¥#{@product.price}
+      p.lead 商品詳細
+      |
+      = @product.description
+      br
+      br
+      p.lead 種類：#{@product.kind}
+      p.lead サイズ：#{@product.size}
+      p.lead デザイナー：#{@product.designer}
+      p.lead 在庫数：#{@product.stock}
+      p.lead 合計の購入数：#{@total_purchase_num}
+
+br
+p 購入ユーザー情報
+.row
+  .col-md-12
+    table.table.table-bordered
+      thead
+        tr
+          th ID
+          th 名前
+          th メール
+          th 電話番号
+          th 都道府県
+          th 年齢
+          th 性別
+          th 購入数
+      - @product_purchases.each do |product_purchase|
+        tbody
+          tr
+            td= product_purchase.user.id
+            td= product_purchase.user.name
+            td= product_purchase.user.email
+            td= product_purchase.user.tel
+            td= product_purchase.user.prefectures
+            td= (Date.today.strftime("%Y%m%d").to_i - product_purchase.user.birthday.strftime("%Y%m%d").to_i)/10000
+            td= product_purchase.user.sex
+            td= product_purchase.num

@@ -1,1 +1,35 @@
 p トータルピッキングリスト
+
+.row
+  .col-md-12
+    = form_with url: total_picking_list_admin_shipments_path, method: 'get', local: true do |f|
+      .form-group
+        = f.label :num, '購入状況', class: "col-md-2"
+        = f.select :num, ['購入されたことがある','購入されたことがない'], {include_blank: '購入されたことがある商品かどうか'}, class: 'form-control btn btn-info'
+      .input-group
+        = f.text_field :name, class: 'form-control'
+        span.input-group-btn
+          = f.submit '検索する', class: 'btn btn-primary'
+
+.row
+  .col-md-12
+    table.table
+      thead
+        tr
+          th
+            | 商品名
+            = sort_asc "name"
+            = sort_desc "name"
+          th
+            | 購入数
+            = link_to "▲", total_picking_list_admin_shipments_path(sort: "asc")
+            = link_to "▼", total_picking_list_admin_shipments_path(sort: "desc")
+    - @products.each do |p|
+      = link_to p.name, total_picking_products_admin_shipment_path(p)
+      = p.product_purchases.sum(:num)
+      br
+
+  .col-md-12
+    br
+    .col-md-7.col-xs-5
+      = link_to 'エクスポート', total_picking_list_admin_shipments_path(format: :csv), class: 'btn btn-primary mb-3'

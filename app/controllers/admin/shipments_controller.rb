@@ -1,4 +1,6 @@
 class Admin::ShipmentsController < ApplicationController
+  include Admin::ShipmentsHelper
+
   def index
     if params[:status].present?
       @product_purchases_search = ProductPurchase.where(finished_flag: true, status: params[:status]).search(params[:order_id]).uniq(&:order_id)
@@ -42,6 +44,35 @@ class Admin::ShipmentsController < ApplicationController
   end
 
   def total_picking_list
-    
+    if params[:num].present?
+      if params[:num] == "購入されたことがある"
+        @product_id = ProductPurchase.all.uniq(&:product_id).pluck(:product_id)
+        @products = Product.search(params[:name]).where(id: @product_id).order(sort_column + ' ' + sort_direction)
+      elsif params[:num] == "購入されたことがない"
+        @product_id = ProductPurchase.all.uniq(&:product_id).pluck(:product_id)
+        @products = Product.search(params[:name]).where.not(id: @product_id).order(sort_column + ' ' + sort_direction)
+      else
+        @products = Product.search(params[:name]).order(sort_column + ' ' + sort_direction)
+      end
+    else
+      @products = Product.search(params[:name]).order(sort_column + ' ' + sort_direction)
+    end
+    @num = ProductPurchase.where(product_id: @products).sum(:num).to_s
+    @nums = []
+    @nums << @num
+    @product_id = ProductPurchase.where(product_id: @products).pluck(:product_id).uniq
+    @product_name = Product.where(id: @product_id).pluck(:name)
+    @csv = @product_name.product(@nums)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @csv.generate_csv, filename: "total_picking-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
+    end
+  end
+
+  def total_picking_products
+    @product = Product.find(params[:id])
+    @total_purchase_num = Product.find(params[:id]).product_purchases.sum(:num)
+    @product_purchases = Product.find(params[:id]).product_purchases
   end
 end

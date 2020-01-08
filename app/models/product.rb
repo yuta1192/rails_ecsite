@@ -66,4 +66,22 @@ class Product < ApplicationRecord
     return Product.where(stock: 1..100) if valid == "true"
     Product.all
   }
+
+  def self.csv_attributes
+    ["name","num"]
+  end
+
+  def self.ja_csv_attributes
+    ["商品名","商品販売個数"]
+  end
+
+  def self.generate_csv
+    CSV.generate(headers: true) do |csv|
+      csv << ja_csv_attributes
+      all.each do |product|
+        byebug
+        csv << csv_attributes.map{|attr| product.send(attr)}
+      end
+    end
+  end
 end
