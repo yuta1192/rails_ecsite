@@ -1,10 +1,10 @@
 class ProductPurchase < ApplicationRecord
   def self.csv_attributes
-    ["id", "user_id", "product_id", "num", "order_id", "shipping_zip_code", "shipping_prefectures", "shipping_address", "delivery_date", "delivery_zone"]
+    ["id","user_id","product_id","num","order_id","shipping_zip_code","shipping_prefectures","shipping_address","delivery_date","delivery_zone","finished_flag","status"]
   end
 
   def self.ja_csv_attributes
-    ["ID", "ユーザID", "商品ID", "個数", "注文番号", "宛先郵便番号", "宛先都道府県", "宛先住所", "配送日", "配送時間帯"]
+    ["ID", "ユーザID", "商品ID", "個数", "注文番号", "宛先郵便番号", "宛先都道府県", "宛先住所", "配送日", "配送時間帯", "受注処理", "出荷状況"]
   end
 
   def self.generate_csv
@@ -37,17 +37,26 @@ class ProductPurchase < ApplicationRecord
       product_purchase = find_by(order_id: row["order_id"]) || new
       # CSVからデータを取得し、設定する
       product_purchase.attributes = row.to_hash.slice(*updatable_attributes)
+      byebug
       # 保存する
       product_purchase.save
     end
   end
 
   def self.updatable_attributes
-    ["id", "user_id", "product_id", "num", "order_id", "shipping_zip_code", "shipping_prefectures", "shipping_address", "delivery_date", "delivery_zone", "finish_flag"]
+    ["id", "user_id", "product_id", "num", "order_id", "shipping_zip_code", "shipping_prefectures", "shipping_address", "delivery_date", "delivery_zone", "finished_flag", "status"]
   end
 
   def self.search(order_id)
     return ProductPurchase.all.uniq(&:order_id) unless order_id
     ProductPurchase.where(['order_id LIKE ?', "%#{order_id}%"])
   end
+
+  scope :total_product_purchase_num, -> {
+
+  }
+
+  enum status: {
+    出荷可能:0,着手:1,出荷済:2
+  }
 end

@@ -4,6 +4,9 @@
   .col-md-12
     br.p 注文番号
     = form_with url: admin_shipments_path, method: 'get', local: true do |f|
+      .form-group
+        = f.label :status, '出荷状況', class: "col-md-2"
+        = f.select :status, ProductPurchase.statuses.keys, {prompt: '選択してください'}, class: 'form-control btn btn-info'
       .input-group
         = f.text_field :order_id, class: 'form-control'
         span.input-group-btn
@@ -22,12 +25,42 @@
             th 配達日
             th 配達時間帯
             th 購入日
+            th 出荷可能
+            th 着手
+            th 出荷済
         tbody
           tr
             th = i
-            td = link_to order.order_id, admin_order_path(order.order_id)
+            td = link_to order.order_id, admin_shipment_path(order.order_id)
             td = ProductPurchase.find_by(order_id: order.order_id).user_id
             td #{ProductPurchase.find_by(order_id: order.order_id).shipping_zip_code + ProductPurchase.find_by(order_id: order.order_id).shipping_prefectures + ProductPurchase.find_by(order_id: order.order_id).shipping_address}
             td = ProductPurchase.find_by(order_id: order.order_id).delivery_date.strftime('%Y/%m/%d')
             td = ProductPurchase.find_by(order_id: order.order_id).delivery_zone
             td = ProductPurchase.find_by(order_id: order.order_id).created_at.strftime('%Y/%m/%d')
+            - if ProductPurchase.find_by(order_id: order.order_id).status == "出荷可能"
+              td ◯
+            - else
+              td
+            - if ProductPurchase.find_by(order_id: order.order_id).status == "着手"
+              td ◯
+            - else
+              td
+            - if ProductPurchase.find_by(order_id: order.order_id).status == "出荷済"
+              td ◯
+            - else
+              td
+
+  .col-md-12
+    br
+    .col-md-7.col-xs-5
+      = link_to 'エクスポート', admin_shipments_path(format: :csv), class: 'btn btn-primary mb-3'
+    .col-md-5.col-xs-7
+      = form_tag import_admin_shipments_path, multipart: true do
+        .input-group
+          = file_field_tag :file
+          span.input-group-btn
+          = submit_tag "インポート", class: 'btn btn-primary mb-3'
+
+
+  br
+  = link_to "トータルピッキングリスト", total_picking_list_admin_shipments_path

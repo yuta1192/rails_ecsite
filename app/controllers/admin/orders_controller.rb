@@ -1,7 +1,8 @@
 class Admin::OrdersController < ApplicationController
   def index
     @orders = ProductPurchase.all.pluck(:order_id).uniq.compact
-    @product_purchases_search = ProductPurchase.where(finish_flag: false).search(params[:order_id]).uniq(&:order_id)
+    @product_purchases_search = ProductPurchase.where(finished_flag: false).search(params[:order_id]).uniq(&:order_id)
+    @product_purchases = ProductPurchase.where(finished_flag: false)
 
     respond_to do |format|
       format.html
@@ -69,13 +70,13 @@ class Admin::OrdersController < ApplicationController
     end
   end
 
-  def finish_flag
-    if params.dig(:product_purchase, :finish_flag) == "true"
-      ProductPurchase.where(order_id: params[:order_id]).update(finish_flag: true)
+  def finished_flag
+    if params.dig(:product_purchase, :finished_flag) == "true"
+      ProductPurchase.where(order_id: params[:order_id]).update(finished_flag: true, status: 0)
       flash[:notice] = "選択した受注を完了しました。"
       redirect_to admin_orders_path
-    elsif params.dig(:product_purchase, :finish_flag) == "false"
-      ProductPurchase.where(order_id: params[:order_id]).update(finish_flag: false)
+    elsif params.dig(:product_purchase, :finished_flag) == "false"
+      ProductPurchase.where(order_id: params[:order_id]).update(finished_flag: false, status: nil)
       flash[:notice] = "選択した受注を未着手しました。"
       redirect_to admin_orders_path
     else

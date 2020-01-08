@@ -1,0 +1,51 @@
+- provide(:title, "注文番号：#{@orders.first.order_id}")
+
+.row
+  .col-md-12
+    p.h2 注文番号：#{@orders.first.order_id}
+    br
+    p 宛先
+    p 〒#{@orders.first.shipping_zip_code}
+    p #{@orders.first.shipping_prefectures}
+    p #{@orders.first.shipping_address}
+    br
+    p 配達日時
+    p #{@orders.first.delivery_date.strftime('%Y年%m月%d日')} ,#{@orders.first.delivery_zone}
+
+    br
+    - @orders.each do |order|
+      table.table.table-bordered
+        thead
+          tr
+            th.col-md-2 番号
+            th.col-md-6 商品名
+            th.col-md-2 購入数
+            th.col-md-2 値段
+        tbody
+          tr
+            th = order.id
+            td = order.product.name
+            td = order.num
+            td.p ¥ #{order.product.price}
+
+    br
+      .col-md-12
+        = link_to "一部返金またはキャンセル", "https://pay.jp/d/charges/#{@orders.first.order_id}", class: 'btn btn-warning col-md-3'
+        .col-md-6
+        = link_to "納品書の発行", admin_order_deliverynote_path(@orders.first.order_id), class: 'btn btn-info col-md-3'
+
+    br
+    br
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finished_flag_path(order_id: params[:id]) do |f|
+      = f.hidden_field :finished_flag, value: false
+      = f.submit "受注処理未完了", class: "btn btn-primary"
+    br
+
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: status_admin_shipments_path(order_id: params[:id]) do |f|
+      = f.radio_button :status, "出荷可能"
+      | 出荷可能
+      = f.radio_button :status, "着手"
+      | 着手
+      = f.radio_button :status, "出荷済"
+      | 出荷済
+      = f.submit "出荷状況変更", class: "btn btn-primary"

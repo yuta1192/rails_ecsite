@@ -39,12 +39,15 @@ Rails.application.routes.draw do
     resources :orders do
       get :deliverynote
       patch :delivery_update
-      patch :finish_flag
+      patch :finished_flag
       collection { post :import }
     end
     resources :shipments do
       collection do
         get :home
+        get :total_picking_list
+        patch :status
+        post :import
       end
     end
     resources :users

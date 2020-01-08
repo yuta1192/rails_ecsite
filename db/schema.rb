@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_26_070837) do
+ActiveRecord::Schema.define(version: 2020_01_06_032034) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
@@ -69,7 +69,8 @@ ActiveRecord::Schema.define(version: 2019_12_26_070837) do
     t.string "shipping_address"
     t.date "delivery_date"
     t.integer "delivery_zone"
-    t.boolean "finish_flag", default: false, null: false
+    t.boolean "finished_flag", default: false, null: false
+    t.integer "status"
   end
 
   create_table "products", force: :cascade do |t|

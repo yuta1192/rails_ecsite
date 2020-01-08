@@ -59,6 +59,6 @@
 
     br
     br
-    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finish_flag_path(order_id: params[:id]) do |f|
-      = f.check_box :finish_flag, {}, "true", "false"
+    = form_with model: ProductPurchase.find_by(user_id: @orders.first.user_id, order_id: params[:id]), url: admin_order_finished_flag_path(order_id: params[:id]) do |f|
+      = f.check_box :finished_flag, {}, "true", "false"
       = f.submit "作業完了", class: "btn btn-primary"

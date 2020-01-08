@@ -14,6 +14,7 @@
   prefectures = "福島県"
   tel = 1111111111
   sexes = [0,1].sample
+  birthday = Date.today.strftime
   User.create!(
                name: Faker::Name.first_name,
                zip_code: zip_code,
@@ -23,7 +24,8 @@
                tel: tel,
                password: password,
                password_confirmation: password,
-               sex: sexes
+               sex: sexes,
+               birthday: birthday
                )
 end
 
@@ -39,7 +41,8 @@ User.create!(
   password: "password",
   password_confirmation: "password",
   admin: true,
-  sex: 0
+  sex: 0,
+  birthday: Date.today.strftime
 )
 
 User.create!(
@@ -53,10 +56,11 @@ User.create!(
   password: "password",
   password_confirmation: "password",
   admin: false,
-  sex: 1
+  sex: 1,
+  birthday: Date.today.strftime
 )
 
-200.times do |n|
+300.times do |n|
   price = n*100
   description = "password"
   kinds = ["帽子","ズボン","シャツ","パンツ","T-シャツ","ワイシャツ","ポロシャツ","小物","靴","メガネ","カバン","上着"]
@@ -77,4 +81,15 @@ User.create!(
                sale: false,
                size: size
                )
+end
+
+50.times do |n|
+  ids = n+10
+  product_ids = n+10
+  user_id = 1999
+  Favorite.create!(
+                id: ids,
+                product_id: product_ids,
+                user_id: user_id
+                )
 end
