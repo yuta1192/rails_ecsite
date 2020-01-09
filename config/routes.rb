@@ -61,5 +61,12 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :stock_managements do
+      collection do
+        get :stock_fluctuation
+        get :management
+        patch :stock_updates
+      end
+    end
   end
 end

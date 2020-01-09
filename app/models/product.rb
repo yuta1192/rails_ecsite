@@ -10,6 +10,7 @@ class Product < ApplicationRecord
   has_many :favorites
   has_many :favorited_users, through: :favorites, source: :user
   has_many :product_purchases
+  has_many :stock_updates
   # product.name
   def self.search(search)
     return Product.all unless search
@@ -67,8 +68,16 @@ class Product < ApplicationRecord
     Product.all
   }
 
+  scope :stock_present, -> { where(stock: 1..Float::INFINITY) }
+
+  scope :stock_blank, -> { where(stock: 0) }
+
   def self.csv_attributes
-    ["name","num"]
+    if Product.product_purchases.present?
+      ["name","num"]
+    else
+      ["name","0"]
+    end
   end
 
   def self.ja_csv_attributes
@@ -79,8 +88,7 @@ class Product < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ja_csv_attributes
       all.each do |product|
-        byebug
-        csv << csv_attributes.map{|attr| product.send(attr)}
+        csv << csv_attributes.map{|attr| product.send(attr) && product.product_purchases.send(attr)}
       end
     end
   end

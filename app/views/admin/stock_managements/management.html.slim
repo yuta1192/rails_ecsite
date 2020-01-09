@@ -1,0 +1,44 @@
+p 商品名での検索
+p 在庫切れか切れてないか
+p →検索
+p csvで更新
+
+.row
+  .col-md-12
+    = form_with url: management_admin_stock_managements_path, method: 'get', local: true do |f|
+      .form-group.col-md-8
+        = f.label :name, "商品名"
+        = f.text_field :name, class: 'form-control'
+      .form-group.col-md-2
+        = f.label :stock_blank, '在庫なし'
+        = f.check_box :stock_blank, {}, "true", "false"
+      .form-group.col-md-2
+        = f.submit '検索する', class: 'btn btn-primary'
+
+  .col-md-12
+    table.table.table-bordered
+      thead
+        tr
+          th 商品ID
+          th 商品名
+          th デザイナー
+          th 在庫
+          th 在庫追加個数
+          th 引当
+          th 詳細
+      = form_with url: stock_updates_admin_stock_managements_path, method: 'patch', local: true do |f|
+        - @products.each do |product|
+          tbody
+            tr
+              td = product.id
+              td = product.name
+              td = product.designer
+              td = product.stock
+              td = number_field_tag('num[]')
+              = hidden_field_tag('product_id[]', product.id)
+              - if product.product_purchases.present? && product.product_purchases.where(finished_flag: false)
+                td = product.product_purchases.where(finished_flag: false).sum(:num)
+              - else
+                td = 0
+              td = link_to "詳細", admin_product_path(product)
+        = f.submit '在庫を追加'

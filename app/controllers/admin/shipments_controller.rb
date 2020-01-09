@@ -57,12 +57,7 @@ class Admin::ShipmentsController < ApplicationController
     else
       @products = Product.search(params[:name]).order(sort_column + ' ' + sort_direction)
     end
-    @num = ProductPurchase.where(product_id: @products).sum(:num).to_s
-    @nums = []
-    @nums << @num
-    @product_id = ProductPurchase.where(product_id: @products).pluck(:product_id).uniq
-    @product_name = Product.where(id: @product_id).pluck(:name)
-    @csv = @product_name.product(@nums)
+    @csv = Product.joins(:product_purchases).select("products.*, product_purchases.*")
 
     respond_to do |format|
       format.html
