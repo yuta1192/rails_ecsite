@@ -10,3 +10,11 @@
 h1 商品を追加する
 
 = render partial: 'form', locals: { product: @product }
+
+br
+br
+= form_tag import_admin_products_path, multipart: true do
+  .input-group
+    = file_field_tag :file
+    span.input-group-btn
+    = submit_tag "インポート", class: 'btn btn-primary mb-3'

@@ -21,20 +21,25 @@
               | 更新日
               = sort_asc "updated_at"
               = sort_desc "updated_at"
-    - @product_search.each do |product|
-      .admin_product_index
-        table.col-xs-6.col-md-2
-          tr
-            td = link_to product.name, admin_product_path(product)
-          tr
-            td
-              = image_tag product.image.to_s
-          tr
-            td.p ¥ #{product.price}
-          tr
-            td
-              = link_to '編集', edit_admin_product_path(product), class: 'btn btn-primary mr-3'
-              = link_to '削除', [:admin, product], method: :delete, data: { confirm: "商品「#{product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+    = form_with(url: form_edit_admin_products_path, local: true, method: :get) do |f|
+      - @product_search.each do |product|
+        .admin_product_index
+          table.col-xs-6.col-md-2
+            tr
+              td = link_to product.name, admin_product_path(product)
+            tr
+              td
+                = image_tag product.image.to_s
+            tr
+              td.p ¥ #{product.price}
+            tr
+              td
+                = link_to '編集', edit_admin_product_path(product), class: 'btn btn-primary mr-3'
+                = link_to '削除', [:admin, product], method: :delete, data: { confirm: "商品「#{product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+                = f.check_box :product_ids_params, { multiple: true, checked: product[:checked], disabled: product[:disabled], include_hidden: false }, product.id
+      = f.submit "選択した商品を編集する"
 
   .mb-3
     = paginate @product_search
+
+= link_to 'エクスポート', admin_products_path(format: :csv), class: 'btn btn-primary'

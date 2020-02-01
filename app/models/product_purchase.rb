@@ -37,7 +37,6 @@ class ProductPurchase < ApplicationRecord
       product_purchase = find_by(order_id: row["order_id"]) || new
       # CSVからデータを取得し、設定する
       product_purchase.attributes = row.to_hash.slice(*updatable_attributes)
-      byebug
       # 保存する
       product_purchase.save
     end

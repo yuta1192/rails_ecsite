@@ -52,12 +52,12 @@ class Admin::ShipmentsController < ApplicationController
         @product_id = ProductPurchase.all.uniq(&:product_id).pluck(:product_id)
         @products = Product.search(params[:name]).where.not(id: @product_id).order(sort_column + ' ' + sort_direction)
       else
-        @products = Product.search(params[:name]).order(sort_column + ' ' + sort_direction)
+        @products = Product.search(params[:num]).order(sort_column + ' ' + sort_direction)
       end
     else
-      @products = Product.search(params[:name]).order(sort_column + ' ' + sort_direction)
+      @products = Product.search(params[:num]).order(sort_column + ' ' + sort_direction)
     end
-    @csv = Product.joins(:product_purchases).select("products.*, product_purchases.*")
+    @csv = Product.joins(:product_purchases).select("products.*, product_purchases.*").search(params[:name]).where(id: @product_id)
 
     respond_to do |format|
       format.html

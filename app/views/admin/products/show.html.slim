@@ -19,6 +19,8 @@
       p 在庫数
       = @product.stock
       br
+      p 公開判定
+      = @product.release
       = link_to '編集', edit_admin_product_path(@product), class: 'btn btn-primary mr-3'
       = link_to '削除', [:admin, @product], method: :delete, data: { confirm: "商品「#{@product.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
 br

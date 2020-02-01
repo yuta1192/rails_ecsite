@@ -22,8 +22,8 @@ p トータルピッキングリスト
             = sort_desc "name"
           th
             | 購入数
-            = link_to "▲", total_picking_list_admin_shipments_path(sort: "asc")
-            = link_to "▼", total_picking_list_admin_shipments_path(sort: "desc")
+            = sort_asc "product_purchases.sum(:num)"
+            = sort_desc "product_purchases.sum(:num)"
     - @products.each do |p|
       = link_to p.name, total_picking_products_admin_shipment_path(p)
       = p.product_purchases.sum(:num)

@@ -73,10 +73,13 @@ class Product < ApplicationRecord
   scope :stock_blank, -> { where(stock: 0) }
 
   def self.csv_attributes
-    if Product.product_purchases.present?
-      ["name","num"]
-    else
-      ["name","0"]
+    products = self.all
+    products.each do |p|
+      if p.product_purchases.present?
+        ["name","num"]
+      else
+        ["name","0"]
+      end
     end
   end
 
@@ -88,7 +91,35 @@ class Product < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ja_csv_attributes
       all.each do |product|
-        csv << csv_attributes.map{|attr| product.send(attr) && product.product_purchases.send(attr)}
+        csv << csv_attributes.map{|attr| product.send(attr)}
+      end
+    end
+  end
+
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
+      product = find_by(id: row["id"]) || new
+      # CSVからデータを取得し、設定する
+      product.attributes = row.to_hash.slice(*updatable_attributes)
+      # 保存する
+      product.save
+    end
+  end
+
+  def self.updatable_attributes
+    ["id", "name", "description","price","kind","image","stock","designer","sale", "size"]
+  end
+
+  def self.csv_attributes
+    ["id", "name", "description","price","kind","image","stock","designer","sale", "size"]
+  end
+
+  def self.generate_csv
+    CSV.generate(headers: true) do |csv|
+      csv << csv_attributes
+      all.each do |product|
+        csv << csv_attributes.map{|attr| product.send(attr)}
       end
     end
   end

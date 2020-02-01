@@ -25,10 +25,20 @@ class Admin::ProductsController < ApplicationController
     @products = Product.search(params[:search]).page(params[:page]).per(15)
     #@product_search = Product.search(params[:search]).order('name').page(params[:page]).per(50)
     @product_search = Product.search(params[:search]).page(params[:page]).per(48).order(sort_column + ' ' + sort_direction)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @product_search.generate_csv, filename: "contents-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+    end
   end
 
   def new
     @product = Product.new
+  end
+
+  def import
+    Product.import(params[:file])
+    redirect_to new_admin_product_path
   end
 
   def show
@@ -67,6 +77,21 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, notice: "ユーザー「#{@product.name}」を削除しました。"
   end
 
+  def form_edit
+    @products = Product.where(id: params[:product_ids_params])
+  end
+
+  def products_update
+    @products = Product.where(id: params[:product_ids_params])
+    if @products.update_all(nane: params[:name], description: params[:description], price: params[:price], kind: params[:kind], size: params[:size], designer: params[:designer], stock: params[:stock])
+      flash[:success] = "保存しました。"
+      redirect_to admin_products_path
+    else
+      flash[:success] = "失敗しました。"
+      render 'form_with'
+    end
+  end
+
   private
 
   def user_login
@@ -79,5 +104,9 @@ class Admin::ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :kind, :image, :stock, :designer, :sale, :size)
+  end
+
+  def product_ids_params
+    params.require(:product).permit(product_ids_params: [])
   end
 end

@@ -59,6 +59,9 @@ Rails.application.routes.draw do
       collection do
         get :home
         get :search
+        post :import
+        get :form_edit
+        post :products_update
       end
     end
     resources :stock_managements do
